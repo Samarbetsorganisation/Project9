@@ -1,4 +1,4 @@
-namespace SP9.Models;
+namespace Project9.Models;
 
 public class ErrorViewModel
 {
