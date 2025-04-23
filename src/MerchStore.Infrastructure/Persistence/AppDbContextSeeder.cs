@@ -68,7 +68,7 @@ public class AppDbContextSeeder
                     1),
 
                 new Product(
-                    "Developer Mug",
+                    "Developer Mugg",
                     "A ceramic mug with a funny programming joke.",
                     // new Uri("https://example.com/images/mug.jpg"),
                     new Uri("https://merchstore202503311226.blob.core.windows.net/images/mug.png"),
