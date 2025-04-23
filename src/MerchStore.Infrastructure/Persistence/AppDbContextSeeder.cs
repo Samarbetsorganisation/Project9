@@ -60,12 +60,12 @@ public class AppDbContextSeeder
             var products = new List<Product>
             {
                 new Product(
-                    "Conference T-Shirt",
-                    "A comfortable cotton t-shirt with the conference logo.",
+                    "Wizza Staff",
+                    "Belonged to the Great Wizard Gandalf The White, the most powerful Wizza of the Middle Earth.",
                     // new Uri("https://example.com/images/tshirt.jpg"),
-                    new Uri("https://merchstore202503311226.blob.core.windows.net/images/tshirt.png"),
-                    Money.FromSEK(249.99m),
-                    50),
+                    new Uri("https://i.ytimg.com/vi/QziFp6dYxgE/maxresdefault.jpg"),
+                    Money.FromSEK(500000m),
+                    1),
 
                 new Product(
                     "Developer Mug",
