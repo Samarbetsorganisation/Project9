@@ -1,0 +1,8 @@
+### Get all products
+GET http://localhost:5004/api/basic/products
+
+### Get product by ID (replace with a valid ID)
+GET http://localhost:5004/api/basic/products/f8b3071b-66db-4584-914b-ab871c80dd21
+
+### Get product with invalid ID (404 response)
+GET http://localhost:5004/api/basic/products/00000000-0000-0000-0000-000000000000
