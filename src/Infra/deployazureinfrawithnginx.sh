@@ -21,19 +21,24 @@ ADMIN_USERNAME="azureuser"
 VM_SIZE="Standard_B1s"
 VM_IMAGE="Ubuntu2204"
 
+# Skapa en katalog för att lagra genererade filer
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+OUTPUT_DIR="$SCRIPT_DIR/Azureinfo"
+mkdir -p "$OUTPUT_DIR"
+
 # Skapa säkra SSH-nycklar lokalt
 echo "Genererar SSH-nycklar för säker åtkomst..."
-ssh-keygen -t rsa -b 4096 -f "./azure_ssh_key" -N ""
-SSH_PUBLIC_KEY=$(cat ./azure_ssh_key.pub)
+ssh-keygen -t rsa -b 4096 -f "$OUTPUT_DIR/azure_ssh_key" -N ""
+SSH_PUBLIC_KEY=$(cat "$OUTPUT_DIR/azure_ssh_key.pub")
 
 # Sätt korrekta rättigheter för nyckelfilen
-chmod 600 ./azure_ssh_key
+chmod 600 "$OUTPUT_DIR/azure_ssh_key"
 
 # Skapa resursfiler för att spara viktig information
-touch azure_credentials.txt
-touch ssh_guide.txt
+touch "$OUTPUT_DIR/azure_credentials.txt"
+touch "$OUTPUT_DIR/ssh_guide.txt"
 
-echo "SSH-nycklarna har genererats och sparats i ./azure_ssh_key" > azure_credentials.txt
+echo "SSH-nycklarna har genererats och sparats i $OUTPUT_DIR/azure_ssh_key" > "$OUTPUT_DIR/azure_credentials.txt"
 
 # 1. Skapa resursgrupp
 echo "Skapar resursgrupp..."
@@ -156,7 +161,7 @@ az vm create \
     --nics "${BASTION_NAME}-NIC" \
     --image $VM_IMAGE \
     --admin-username $ADMIN_USERNAME \
-    --ssh-key-values "./azure_ssh_key.pub" \
+    --ssh-key-values "$OUTPUT_DIR/azure_ssh_key.pub" \
     --size $VM_SIZE
 
 # Reverse Proxy
@@ -166,7 +171,7 @@ az vm create \
     --nics "${REVERSE_PROXY_NAME}-NIC" \
     --image $VM_IMAGE \
     --admin-username $ADMIN_USERNAME \
-    --ssh-key-values "./azure_ssh_key.pub" \
+    --ssh-key-values "$OUTPUT_DIR/azure_ssh_key.pub" \
     --size $VM_SIZE
 
 # App Server
@@ -176,7 +181,7 @@ az vm create \
     --nics "${APP_SERVER_NAME}-NIC" \
     --image $VM_IMAGE \
     --admin-username $ADMIN_USERNAME \
-    --ssh-key-values "./azure_ssh_key.pub" \
+    --ssh-key-values "$OUTPUT_DIR/azure_ssh_key.pub" \
     --size $VM_SIZE
 
 # 10. Vänta en kort stund för att se till att VM:erna är tillgängliga
@@ -190,10 +195,10 @@ PROXY_IP=$(az network public-ip show --resource-group $RESOURCE_GROUP --name "${
 APP_PRIVATE_IP=$(az vm list-ip-addresses --resource-group $RESOURCE_GROUP --name $APP_SERVER_NAME --query "[0].virtualMachine.network.privateIpAddresses[0]" -o tsv)
 PROXY_PRIVATE_IP=$(az vm list-ip-addresses --resource-group $RESOURCE_GROUP --name $REVERSE_PROXY_NAME --query "[0].virtualMachine.network.privateIpAddresses[0]" -o tsv)
 
-echo "Bastion IP: $BASTION_IP" >> azure_credentials.txt
-echo "Reverse Proxy IP: $PROXY_IP" >> azure_credentials.txt
-echo "Reverse Proxy Privat IP: $PROXY_PRIVATE_IP" >> azure_credentials.txt
-echo "App Server Privat IP: $APP_PRIVATE_IP" >> azure_credentials.txt
+echo "Bastion IP: $BASTION_IP" >> "$OUTPUT_DIR/azure_credentials.txt"
+echo "Reverse Proxy IP: $PROXY_IP" >> "$OUTPUT_DIR/azure_credentials.txt"
+echo "Reverse Proxy Privat IP: $PROXY_PRIVATE_IP" >> "$OUTPUT_DIR/azure_credentials.txt"
+echo "App Server Privat IP: $APP_PRIVATE_IP" >> "$OUTPUT_DIR/azure_credentials.txt"
 
 # 12. Konfigurera SSH på Bastion för att säkerställa att agentvidarebefordran tillåts
 echo "Konfigurerar Bastion Host för SSH-agentvidarebefordran..."
@@ -256,7 +261,7 @@ cat > ~/.ssh/config << EOF
 Host bastion
     HostName $BASTION_IP
     User $ADMIN_USERNAME
-    IdentityFile $(pwd)/azure_ssh_key
+    IdentityFile $OUTPUT_DIR/azure_ssh_key
     ForwardAgent yes
 
 # Reverse Proxy via Bastion
@@ -276,11 +281,11 @@ EOF
 
 chmod 600 ~/.ssh/config
 
-echo "SSH-konfiguration har sparats i ~/.ssh/config" >> azure_credentials.txt
+echo "SSH-konfiguration har sparats i ~/.ssh/config" >> "$OUTPUT_DIR/azure_credentials.txt"
 
 # 16. Skapa utförliga SSH-instruktioner
 echo "Skapar SSH-konfigurationsguide..."
-cat > ssh_guide.txt << EOF
+cat > "$OUTPUT_DIR/ssh_guide.txt" << EOF
 ========= GUIDE FÖR SÄKER SSH-ÅTKOMST =========
 
 SSH-konfiguration har automatiskt skapats i din ~/.ssh/config-fil.
@@ -289,7 +294,7 @@ Nu kan du ansluta till servrarna med enkla kommandon!
 Steg 1: Starta SSH-agenten och lägg till din nyckel
 ----------------------------------------------
 eval \$(ssh-agent)
-ssh-add $(pwd)/azure_ssh_key
+ssh-add $OUTPUT_DIR/azure_ssh_key
 
 Steg 2: Anslut till servrarna
 ------------------------
@@ -305,13 +310,13 @@ Till App Server (genom Bastion):
 Alternativa direkta kommandon (om du inte vill använda config-filen):
 ------------------------------------------------------------
 Till Bastion Host:
-  ssh -A -i $(pwd)/azure_ssh_key $ADMIN_USERNAME@$BASTION_IP
+  ssh -A -i $OUTPUT_DIR/azure_ssh_key $ADMIN_USERNAME@$BASTION_IP
 
 Till Reverse Proxy (genom Bastion), med ProxyJump:
-  ssh -A -i $(pwd)/azure_ssh_key -J $ADMIN_USERNAME@$BASTION_IP $ADMIN_USERNAME@$PROXY_PRIVATE_IP
+  ssh -A -i $OUTPUT_DIR/azure_ssh_key -J $ADMIN_USERNAME@$BASTION_IP $ADMIN_USERNAME@$PROXY_PRIVATE_IP
 
 Till App Server (genom Bastion), med ProxyJump:
-  ssh -A -i $(pwd)/azure_ssh_key -J $ADMIN_USERNAME@$BASTION_IP $ADMIN_USERNAME@$APP_PRIVATE_IP
+  ssh -A -i $OUTPUT_DIR/azure_ssh_key -J $ADMIN_USERNAME@$BASTION_IP $ADMIN_USERNAME@$APP_PRIVATE_IP
 
 Filöverföring med SCP och ProxyJump:
 ---------------------------------
@@ -337,10 +342,10 @@ VIKTIGT OM SSH-AGENT OCH SÄKERHET:
 EOF
 
 echo "======== KONFIGURATION KLAR ========"
-echo "Se azure_credentials.txt för IP-adresser och andra detaljer"
-echo "Se ssh_guide.txt för utförliga anslutningsinstruktioner"
+echo "Se $OUTPUT_DIR/azure_credentials.txt för IP-adresser och andra detaljer"
+echo "Se $OUTPUT_DIR/ssh_guide.txt för utförliga anslutningsinstruktioner"
 echo ""
 echo "För att komma igång direkt, kör följande kommandon:"
 echo "eval \$(ssh-agent)"
-echo "ssh-add $(pwd)/azure_ssh_key"
+echo "ssh-add $OUTPUT_DIR/azure_ssh_key"
 echo "ssh app-server  # För att ansluta direkt till App Server genom Bastion"
