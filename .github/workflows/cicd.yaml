@@ -30,7 +30,7 @@ jobs:
 
     - name: Build and publish the app
       run: |
-        dotnet build \src\MerchStore.WebUI --no-restore
+        dotnet build src/MerchStore.WebUI --no-restore
         dotnet publish -c Release -o ./publish        
 
     - name: Upload app artifacts to Github
