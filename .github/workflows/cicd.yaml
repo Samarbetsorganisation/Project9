@@ -60,4 +60,4 @@ jobs:
 
     - name: Start the application service
       run: |
-        sudo systemctl start GithubActionsDemo.service   
+        sudo systemctl start Project9.service   
