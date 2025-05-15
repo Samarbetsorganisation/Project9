@@ -5,7 +5,7 @@ location=northeurope
 env_name=MerchStoreEnv
 app_name=MerchStore
 app_port=8080
-image=ghcr.io/<repo>/mydemoapp
+image=ghcr.io/samarbetsorganisation/project9
 
 az group create --location $location --name $resource_group
 
