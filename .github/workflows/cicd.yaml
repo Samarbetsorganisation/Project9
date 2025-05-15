@@ -1,0 +1,60 @@
+name: cicd
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  CONTAINER_IMAGE: ghcr.io/${{ github.repository }}/project9:latest
+  RESOURCE_GROUP: MerchStoreRG
+  CONTAINER_APP_NAME: merchstore
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          docker build . -t $CONTAINER_IMAGE
+          docker push $CONTAINER_IMAGE
+
+  deploy_to_vm:
+    needs: build_and_push
+    runs-on: self-hosted
+
+    steps:
+      - name: Stop and remove existing container
+        run: sudo docker stop $CONTAINER_APP_NAME || true && sudo docker rm $CONTAINER_APP_NAME || true
+
+      - name: Start the new container
+        run: sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME $CONTAINER_IMAGE
+
+  deploy_to_azure_container_apps:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp update \
+            --name $CONTAINER_APP_NAME \
+            --resource-group $RESOURCE_GROUP \
+            --image $CONTAINER_IMAGE
