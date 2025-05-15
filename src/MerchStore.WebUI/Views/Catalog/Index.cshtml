@@ -6,53 +6,93 @@
 
 <style>
     .product-image {
-        object-fit: cover;
-        height: 200px;
+        object-fit: fill;
+        height: 300px;
         width: 100%;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    .glassy-card {
+        backdrop-filter: blur(12px);
+        background: rgba(0, 0, 0, 0.4);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 1rem;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+        color: white;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glassy-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+    }
+
+    .card-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-outline-primary {
+        border-color: #ffd700;
+        color: #ffd700;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #ffd700;
+        color: black;
+    }
+
+    .badge.bg-success {
+        background-color: #28a745;
+    }
+
+    .badge.bg-danger {
+        background-color: #dc3545;
     }
 </style>
 
-<div class="text-center">
-    <h1 class="display-4 mb-4">Product Catalog</h1>
-    <p class="lead mb-5">Browse our awesome merchandise below!</p>
+<div class="text-center my-5">
+    <h1 class="text-4xl font-bold text-yellow-300 mb-3 drop-shadow-lg">Product Catalog</h1>
+    <p class="text-lg text-white/80">Browse our awesome merchandise below!</p>
 </div>
 
 @if (Model.FeaturedProducts.Any())
 {
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-0">
         @foreach (var product in Model.FeaturedProducts)
         {
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    @if (product.HasImage)
-                    {
-                        <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name">
-                    }
-                    else
-                    {
-                        <div class="card-img-top bg-light text-center p-5">
-                            <span class="text-muted">No image available</span>
-                        </div>
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.TruncatedDescription</p>
+            <div class="glassy-card p-4 flex flex-col justify-between">
+                @if (product.HasImage)
+                {
+                    <img src="@product.ImageUrl" class="product-image" alt="@product.Name" />
+                }
+                else
+                {
+                    <div class="bg-gray-700 text-center p-5 rounded-t-xl">
+                        <span class="text-gray-300">No image available</span>
                     </div>
-                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
-                        <span class="text-primary fw-bold">@product.FormattedPrice</span>
-                        <div>
-                            @if (product.InStock)
-                            {
-                                <span class="badge bg-success me-2">In Stock</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger me-2">Out of Stock</span>
-                            }
-                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm">
-                                View Details
-                            </a>
-                        </div>
+                }
+
+                <div class="mt-4">
+                    <h5 class="text-xl font-semibold text-yellow-100">@product.Name</h5>
+                    <p class="text-sm text-white/80 mt-2">@product.TruncatedDescription</p>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-between align-items-center">
+                    <span class="text-lg font-bold text-yellow-300">@product.FormattedPrice</span>
+                    <div class="text-end">
+                        @if (product.InStock)
+{
+    <span class="badge-stock me-2">In Stock</span>
+}
+else
+{
+    <span class="badge-out me-2">Out of Stock</span>
+}
+
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm mt-2">
+                            View Details
+                        </a>
                     </div>
                 </div>
             </div>
@@ -61,7 +101,7 @@
 }
 else
 {
-    <div class="alert alert-info text-center">
+    <div class="alert alert-info text-center my-5">
         <h2>No products available</h2>
         <p>Check back soon for our latest merchandise!</p>
     </div>

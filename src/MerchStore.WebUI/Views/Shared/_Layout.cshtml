@@ -4,50 +4,90 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MerchStore.WebUI</title>
+
+    <!-- 🧢 Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MerchStore.WebUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MerchStore.WebUI</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-             <!-- Find the navigation section that looks something like this: -->
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 🧭 Navbar -->
+    <header class="w-full px-4">
+        <nav class="rounded-3xl border-2 border-yellow-400 shadow-lg shadow-yellow-300/50 backdrop-blur-lg bg-black bg-opacity-40 text-white mx-auto max-w-screen-xl my-4">
+            <div class="flex flex-col md:flex-row justify-center items-center text-center p-4 space-y-4 md:space-y-0 md:space-x-6">
+                <a asp-controller="Home" asp-action="Index" class="flex items-center space-x-3">
+    <img src="/Images/Logo.png" class="h-32 md:h-40" alt="Logo" />
+    <span class="text-3xl font-bold text-yellow-300">Gandalf Fanbase</span>
+</a>
+
+
+                <div class="flex flex-col md:flex-row items-center text-center">
+                    <a asp-controller="Home" asp-action="Index"
+                        class="block py-2 px-4 text-white hover:text-yellow-300 transition-all">
+                        Home
+                    </a>
+                    <a asp-controller="Catalog" asp-action="Index"
+                        class="block py-2 px-4 text-white hover:text-yellow-300 transition-all">
+                        Store
+                    </a>
+                    <button id="dropdownNavbarLink"
+                        data-dropdown-toggle="dropdownNavbar"
+                        class="flex items-center justify-center py-2 px-4 hover:text-yellow-300 transition-all">
+                        <img src="/Images/knight.png" alt="Button Pic" class="w-20 h-20 rounded-full object-cover border-2 border-yellow-400 shadow-md" />
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownNavbar"
+                class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600 mx-auto">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 text-center" aria-labelledby="dropdownLargeButton">
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Dashboard
+                        </a>
                     </li>
-                    <!-- Add this new item below the Home link -->
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Catalog" asp-action="Index">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <li aria-labelledby="dropdownNavbarLink">
+                        <button id="doubleDropdownButton" data-dropdown-toggle="doubleDropdown" data-dropdown-placement="right-start" type="button"
+                            class="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Dropdown
+                        </button>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - MerchStore.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- 📦 Content -->
+    <main class="flex-grow-1 container pb-3">
+        @RenderBody()
+    </main>
+
+    <!-- 👣 Footer -->
+    <footer class="bg-black bg-opacity-50 backdrop-blur-md text-white rounded-lg shadow-md m-4">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                © 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
+            </span>
+            <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                <li><a href="#" class="hover:underline me-4 md:me-6">About</a></li>
+                <li><a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a></li>
+                <li><a href="#" class="hover:underline me-4 md:me-6">Licensing</a></li>
+                <li><a href="#" class="hover:underline">Contact</a></li>
+            </ul>
         </div>
     </footer>
+
+    <!-- 🔌 Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
