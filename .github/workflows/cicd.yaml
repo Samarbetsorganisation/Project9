@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build . -t $CONTAINER_IMAGE
+          docker build ./src -t $CONTAINER_IMAGE
           docker push $CONTAINER_IMAGE
 
   deploy_to_vm:
