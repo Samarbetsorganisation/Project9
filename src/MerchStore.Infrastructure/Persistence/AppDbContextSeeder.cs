@@ -71,15 +71,15 @@ public class AppDbContextSeeder
                     "Developer Mugg",
                     "A ceramic mug with a funny programming joke.",
                     // new Uri("https://example.com/images/mug.jpg"),
-                    new Uri("https://merchstore202503311226.blob.core.windows.net/images/mug.png"),
+                    new Uri("https://sw6.elbenwald.de/media/7b/3c/c8/1645792022/E1069436_3.jpg"),
                     Money.FromSEK(149.50m),
-                    100),
+                    0),
 
                 new Product(
                     "Laptop Sticker Pack",
                     "A set of 5 programming language stickers for your laptop.",
                     // new Uri("https://example.com/images/stickers.jpg"),
-                    new Uri("https://merchstore202503311226.blob.core.windows.net/images/stickers.png"),
+                    new Uri("https://i.etsystatic.com/36460577/r/il/16fc73/4583997989/il_fullxfull.4583997989_ehbk.jpg"),
                     Money.FromSEK(79.99m),
                     200),
 
@@ -87,7 +87,7 @@ public class AppDbContextSeeder
                     "Branded Hoodie",
                     "A warm hoodie with the company logo, perfect for cold offices.",
                     // new Uri("https://example.com/images/hoodie.jpg"),
-                    new Uri("https://merchstore202503311226.blob.core.windows.net/images/hoodie.png"),
+                    new Uri("https://mockup-api.teespring.com/v3/image/mrAPY9OjVLAcIg7t0hROSfS-u6o/800/800.jpg"),
                     Money.FromSEK(499.99m),
                     25)
             };
