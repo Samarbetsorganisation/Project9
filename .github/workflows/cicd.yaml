@@ -57,4 +57,5 @@ jobs:
           az containerapp update \
             --name $CONTAINER_APP_NAME \
             --resource-group $RESOURCE_GROUP \
-            --image $CONTAINER_IMAGE
+            --image $CONTAINER_IMAGE \
+            --revision-suffix $(date +%s)
