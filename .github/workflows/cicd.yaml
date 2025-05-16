@@ -33,7 +33,7 @@ jobs:
 
   deploy_to_vm:
     needs: build_and_push
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Stop and remove existing container
