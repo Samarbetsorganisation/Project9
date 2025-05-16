@@ -102,8 +102,20 @@ else
     app.Services.SeedDatabaseAsync().Wait();
 }
 
+//TEMPORARY!!!!!!!!!!!!
+app.Services.SeedDatabaseAsync().Wait();
+//TEMPORARY!!!!!!!!!!!!
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "MerchStore API V1");
+    options.RoutePrefix = "swagger"; // Swagger UI at /swagger
+});
+
 app.UseRouting();
 
 app.UseCors("AllowAllOrigins");
