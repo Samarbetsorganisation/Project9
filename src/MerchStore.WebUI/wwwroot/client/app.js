@@ -1,6 +1,6 @@
 // Configuration
 const API_CONFIG = {
-    baseUrl: 'http://server:8080',  // Update with your API's URL
+    baseUrl: 'https://merchstore.delightfulfield-3c9097c9.northeurope.azurecontainerapps.io',  // Update with your API's URL
     endpoints: {
         products: '/api/basic/products'
     },
