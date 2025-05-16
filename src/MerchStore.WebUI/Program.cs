@@ -102,6 +102,10 @@ else
     app.Services.SeedDatabaseAsync().Wait();
 }
 
+//TEMPORARY!!!!!!!!!!!!
+app.Services.SeedDatabaseAsync().Wait();
+//TEMPORARY!!!!!!!!!!!!
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
