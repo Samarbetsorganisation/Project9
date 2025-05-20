@@ -5,6 +5,8 @@ using MerchStore.Application.Common.Interfaces;
 using MerchStore.Domain.Interfaces;
 using MerchStore.Infrastructure.Persistence;
 using MerchStore.Infrastructure.Persistence.Repositories;
+using MerchStore.Domain.Repositories;
+using MerchStore.Infrastructure.Repositories;
 
 namespace MerchStore.Infrastructure;
 
@@ -41,6 +43,9 @@ public static class DependencyInjection
 
         // Register DbContext seeder
         services.AddScoped<AppDbContextSeeder>();
+                   
+        services.AddScoped<ICartRepository, CartRepository>();
+
 
         return services;
     }

@@ -15,6 +15,10 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<Product> Products { get; set; }
 
+    // 🛒 Add these for your cart functionality!
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+
     /// <summary>
     /// Constructor that accepts DbContextOptions, which allows for configuration to be passed in.
     /// This enables different database providers (SQL Server, In-Memory, etc.) to be used with the same context.
@@ -34,7 +38,18 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         // Apply entity configurations from the current assembly
-        // This scans for all IEntityTypeConfiguration implementations and applies them
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+        // 🛠️ Optionally, configure relationships and keys for Cart and CartItem if needed:
+        // Each Cart has many CartItems; each CartItem belongs to one Cart
+
+        modelBuilder.Entity<Cart>()
+            .HasMany(c => c.Items)
+            .WithOne()
+            .HasForeignKey("CartId") // shadow property if CartItem doesn't have a CartId prop
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // If you have a CartId property in CartItem, use:
+        // .HasForeignKey(ci => ci.CartId)
     }
 }
