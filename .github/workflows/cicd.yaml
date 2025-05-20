@@ -35,7 +35,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     env:
-    APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
+      APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
     steps:
       - name: Stop and remove existing container
         run: sudo docker stop $CONTAINER_APP_NAME || true && sudo docker rm $CONTAINER_APP_NAME || true
@@ -47,7 +47,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     env:
-    APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
+      APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
     steps:
       - name: Login to Azure
         uses: azure/login@v2
