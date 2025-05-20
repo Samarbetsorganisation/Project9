@@ -60,5 +60,5 @@ jobs:
             --name $CONTAINER_APP_NAME \
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
-            --revision-suffix $(date +%s)
+            --revision-suffix $(date +%s) \
             --environment-variables APIKEY__VALUE=$APIKEY__VALUE
