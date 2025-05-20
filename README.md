@@ -1,2 +1,2 @@
 # Project9
-Merch store
+Merch store by Group9
