@@ -1,0 +1,33 @@
+@model MerchStore.Application.Cart.CartDto
+@{
+    ViewData["Title"] = "My Cart";
+}
+
+<link rel="stylesheet" href="~/css/cart.css" />
+<h1>🛒 Your Cart</h1>
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price (€)</th>
+        <th>Remove</th>
+    </tr>
+@foreach (var item in Model.Items)
+{
+    <tr>
+        <td>@item.ProductId</td>
+        <td>@item.Quantity</td>
+        <td>@item.Price</td>
+        <td>
+            <form asp-action="Remove" method="post">
+                <input type="hidden" name="productId" value="@item.ProductId" />
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <button type="submit">❌</button>
+            </form>
+        </td>
+    </tr>
+}
+</table>
+
+<p><b>Total: </b>€@Model.TotalPrice</p>
