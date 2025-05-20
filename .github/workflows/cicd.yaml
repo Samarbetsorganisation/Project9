@@ -61,4 +61,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s)
-            --set-env-vars APIKEY__VALUE=$APIKEY__VALUE
+            --environment-variables APIKEY__VALUE=$APIKEY__VALUE
