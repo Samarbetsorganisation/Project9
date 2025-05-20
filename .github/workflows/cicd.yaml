@@ -41,7 +41,7 @@ jobs:
         run: sudo docker stop $CONTAINER_APP_NAME || true && sudo docker rm $CONTAINER_APP_NAME || true
 
       - name: Start the new container
-        run: sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME $CONTAINER_IMAGE
+        run: sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME -e APIKEY__VALUE="$APIKEY__VALUE" $CONTAINER_IMAGE
 
   deploy_to_azure_container_apps:
     needs: build_and_push
@@ -61,3 +61,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s)
+            --set-env-vars APIKEY__VALUE=$APIKEY__VALUE
