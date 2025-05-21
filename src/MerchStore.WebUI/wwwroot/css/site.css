@@ -248,3 +248,108 @@ a:focus {
         box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
         text-shadow: 0 0 4px rgba(255, 77, 77, 0.4);
     }
+
+
+
+ /* ============================
+🌟 WIZARD DROPDOWN MENU STYLES
+=============================== */
+/* ============================
+🌟 WIZARD DROPDOWN MENU STYLES
+=============================== */
+
+#dropdownNavbar {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    border-radius: 1rem;
+    color: white;
+    width: 11rem; /* Tailwind w-44 */
+    font-weight: normal;
+    z-index: 10;
+    position: absolute;
+    overflow: hidden;
+    padding: 0.5rem 0;
+    text-align: center; /* ⬅️ Now text is center-aligned */
+}
+
+/* 🎉 User Greeting */
+#dropdownNavbar .user-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    font-size: 0.9rem;
+    color: #ffd700;
+    background: rgba(255, 255, 255, 0.05);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    text-align: center; /* Keep the greeting centered */
+}
+
+#dropdownNavbar .user-header .email {
+    font-size: 0.75rem;
+    color: #ccc;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* 📋 Menu List */
+#dropdownNavbar ul {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    list-style: none;
+    margin: 0;
+}
+
+/* ✨ Menu Items (links & buttons) */
+#dropdownNavbar a,
+#dropdownNavbar button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #ffd700;
+    background: none;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
+    text-align: center; /* ⬅️ Now text is Center-aligned */
+
+}
+
+/* ✨ On hover */
+#dropdownNavbar a:hover,
+#dropdownNavbar button:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.08);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* 🧼 Space between items */
+#dropdownNavbar li:not(:last-child) {
+    margin-bottom: 0.25rem;
+}
+
+/* 📄 Form reset inside dropdown */
+#dropdownNavbar form {
+    margin: 0;
+}
+
+/* 🌀 Optional dropdown animation (JS can toggle this class) */
+@keyframes fadeInDropdown {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#dropdownNavbar.animate-in {
+    animation: fadeInDropdown 0.3s ease-out;
+}

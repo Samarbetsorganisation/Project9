@@ -5,13 +5,16 @@ using MerchStore.Infrastructure;
 using MerchStore.WebUI.Authentication.ApiKey;
 using MerchStore.WebUI.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews()
+// ──────────────────────────────
+// 1) SERVICE REGISTRATION
+// ──────────────────────────────
 
-    // JSON options (snake_case, enums as strings)
+// MVC + JSON options
+builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy();
@@ -19,14 +22,14 @@ builder.Services.AddControllersWithViews()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// 🔥 **SESSION**: allows you to stash the Cart VM between requests
-builder.Services.AddSession();  
+// Cookie auth
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
-// Add API Key authentication
+// API Key auth & policy
 builder.Services.AddAuthentication()
-   .AddApiKey(builder.Configuration["ApiKey:Value"] ?? throw new InvalidOperationException("API Key is not configured in the application settings."));
-
-// Add API Key authorization
+   .AddApiKey(builder.Configuration["ApiKey:Value"] 
+       ?? throw new InvalidOperationException("API Key is not configured in the application settings."));
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiKeyPolicy", policy =>
@@ -34,7 +37,10 @@ builder.Services.AddAuthorization(options =>
               .RequireAuthenticatedUser());
 });
 
-// Add Application & Infrastructure services
+// Session
+builder.Services.AddSession();
+
+// Application & Infrastructure services
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -54,13 +60,11 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // XML comments
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     if (File.Exists(xmlPath))
         options.IncludeXmlComments(xmlPath);
 
-    // Swagger API Key support
     options.AddSecurityDefinition(ApiKeyAuthenticationDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Description = "API Key Authentication. Enter your API key in the field below.",
@@ -82,9 +86,16 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
+// ──────────────────────────────
+// 2) BUILD
+// ──────────────────────────────
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ──────────────────────────────
+// 3) HTTP REQUEST PIPELINE
+// ──────────────────────────────
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -112,8 +123,8 @@ app.UseSwaggerUI(options =>
 
 app.UseRouting();
 
-// **SESSION MIDDLEWARE**: must come before UseEndpoints/MapControllerRoute
-app.UseSession();  
+// Session middleware (before MVC endpoints)
+app.UseSession();
 
 // CORS + Auth
 app.UseCors("AllowAllOrigins");

@@ -1,0 +1,107 @@
+@using System.Security.Claims
+
+<div class="row justify-content-center themed-claim-wrapper">
+    <div class="col-md-8">
+        <div class="card themed-card">
+            <div class="card-header themed-card-header">
+                <h2 class="fs-4 mb-0">Who Am I?</h2>
+            </div>
+            <div class="card-body themed-card-body">
+                <div class="table-responsive themed-table-wrapper">
+                    <table class="table themed-table">
+                        <thead>
+                            <tr>
+                                <th>Claim Type</th>
+                                <th>Claim Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var claim in User.Claims)
+                            {
+                                <tr>
+                                    <td>@claim.Type</td>
+                                    <td>@claim.Value</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer themed-card-footer">
+                <small><i class="bi bi-info-circle"></i> These are your identity claims from the authentication system</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ============================
+    🪪 THEMED CLAIM CARD STYLING
+    =============================== */
+
+    .themed-claim-wrapper {
+        margin-top: 3rem;
+    }
+
+    .themed-card {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 215, 0, 0.2);
+        border-radius: 1rem;
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        color: white;
+        overflow: hidden;
+    }
+
+    .themed-card-header {
+        background-color: rgba(255, 215, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .themed-card-body {
+        padding: 1.5rem;
+    }
+
+    .themed-card-footer {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ccc;
+        font-size: 0.85rem;
+        text-align: center;
+        border-top: 1px solid rgba(255, 215, 0, 0.1);
+        padding: 1rem;
+    }
+
+    .themed-table-wrapper {
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .themed-table {
+        width: 100%;
+        margin: 0;
+        background-color: transparent;
+        color: white;
+    }
+
+    .themed-table thead {
+        background-color: rgba(255, 215, 0, 0.1);
+        color: #ffd700;
+        font-weight: bold;
+    }
+
+    .themed-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        transition: background-color 0.2s ease;
+    }
+
+    .themed-table td,
+    .themed-table th {
+        padding: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+</style>
