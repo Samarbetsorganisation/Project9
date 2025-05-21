@@ -28,7 +28,7 @@ public static class DependencyInjection
         //services.AddDbContext<AppDbContext>(options =>
         //options.UseInMemoryDatabase("MerchStoreDb"));
         
-        services.AddSingleton<MongoDbContext>();
+        services.AddScoped<MongoDbContext>();
 
         // Register repositories
         services.AddScoped<IProductRepository, MongoDbProductRepository>();
