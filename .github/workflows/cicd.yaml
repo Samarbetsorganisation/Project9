@@ -67,4 +67,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s) \
-            --set-env-vars APIKEY__VALUE="$APIKEY__VALUE" SqlDb__ConnectionString="$SQLDB__CONNECTIONSTRING"
+            --set-env-vars APIKEY__VALUE="$APIKEY__VALUE" SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING"
