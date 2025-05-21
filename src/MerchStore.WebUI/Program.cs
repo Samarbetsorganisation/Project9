@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("SQLDB__CONNECTIONSTRING: " + builder.Configuration["SQLDB__CONNECTIONSTRING"]);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
