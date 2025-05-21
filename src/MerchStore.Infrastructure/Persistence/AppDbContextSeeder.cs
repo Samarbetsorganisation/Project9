@@ -62,34 +62,38 @@ public class AppDbContextSeeder
                 new Product(
                     "Wizza Staff",
                     "Belonged to the Great Wizard Gandalf The White, the most powerful Wizza of the Middle Earth.",
-                    // new Uri("https://example.com/images/tshirt.jpg"),
                     new Uri("https://i.ytimg.com/vi/QziFp6dYxgE/maxresdefault.jpg"),
                     Money.FromSEK(500000m),
-                    1),
+                    1,
+                    "Collectibles",
+                    new[] { "wizard", "staff", "fantasy", "rare" }),
 
                 new Product(
                     "Developer Mugg",
                     "A ceramic mug with a funny programming joke.",
-                    // new Uri("https://example.com/images/mug.jpg"),
                     new Uri("https://merchstore202503311226.blob.core.windows.net/images/mug.png"),
                     Money.FromSEK(149.50m),
-                    100),
+                    100,
+                    "Drinkware",
+                    new[] { "mug", "developer", "funny", "gift" }),
 
                 new Product(
                     "Laptop Sticker Pack",
                     "A set of 5 programming language stickers for your laptop.",
-                    // new Uri("https://example.com/images/stickers.jpg"),
                     new Uri("https://merchstore202503311226.blob.core.windows.net/images/stickers.png"),
                     Money.FromSEK(79.99m),
-                    200),
+                    200,
+                    "Accessories",
+                    new[] { "stickers", "laptop", "programming", "languages" }),
 
                 new Product(
                     "Branded Hoodie",
                     "A warm hoodie with the company logo, perfect for cold offices.",
-                    // new Uri("https://example.com/images/hoodie.jpg"),
                     new Uri("https://merchstore202503311226.blob.core.windows.net/images/hoodie.png"),
                     Money.FromSEK(499.99m),
-                    25)
+                    25,
+                    "Apparel",
+                    new[] { "hoodie", "branded", "clothing", "warm" })
             };
 
             await _context.Products.AddRangeAsync(products);

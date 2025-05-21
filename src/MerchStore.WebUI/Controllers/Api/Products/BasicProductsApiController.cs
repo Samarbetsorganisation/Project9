@@ -48,7 +48,9 @@ public class BasicProductsApiController : ControllerBase
                 Price = p.Price.Amount,
                 Currency = p.Price.Currency,
                 ImageUrl = p.ImageUrl?.ToString(),
-                StockQuantity = p.StockQuantity
+                StockQuantity = p.StockQuantity,
+                Category = p.Category,
+                Tags = p.Tags?.ToList() ?? new List<string>()
             });
 
             // Return 200 OK with the list of products
@@ -96,7 +98,9 @@ public class BasicProductsApiController : ControllerBase
                 Price = product.Price.Amount,
                 Currency = product.Price.Currency,
                 ImageUrl = product.ImageUrl?.ToString(),
-                StockQuantity = product.StockQuantity
+                StockQuantity = product.StockQuantity,
+                Category = product.Category,
+                Tags = product.Tags?.ToList() ?? new List<string>()
             };
 
             // Return 200 OK with the product

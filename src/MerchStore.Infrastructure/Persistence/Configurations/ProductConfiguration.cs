@@ -40,6 +40,20 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.ImageUrl)
             .IsRequired(false); // NULL allowed
 
+        // Configure Category property (new)
+        builder.Property(p => p.Category)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        // Configure Tags property (new)
+        // Store as a comma-separated string
+        builder.Property(p => p.Tags)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList())
+            .HasColumnName("Tags")
+            .HasMaxLength(500);
+
         // Configure the owned entity Money as a complex type
         // This maps the Money value object to columns in the Products table
         builder.OwnsOne(p => p.Price, priceBuilder =>
