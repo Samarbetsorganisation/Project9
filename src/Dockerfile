@@ -18,6 +18,7 @@ WORKDIR /app
 
 COPY --from=build /app .
 
-USER $APP_UID
+# Remove or comment out this line!
+# USER $APP_UID
 
 ENTRYPOINT ["dotnet", "MerchStore.WebUI.dll"]
