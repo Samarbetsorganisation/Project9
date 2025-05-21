@@ -22,13 +22,11 @@ public static class DependencyInjection
     /// <returns>The service collection for chaining</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register DbContext with in-memory database
-        // In a real application, you'd use a real database
-
+        // Register DbContext with SQL Server using environment variable from GitHub Secrets
         services.AddDbContext<AppDbContext>(options =>
-        options.UseInMemoryDatabase("MerchStoreDb"));
-        
-        //services.AddScoped<MongoDbContext>();
+            options.UseSqlServer(
+                configuration["SQLDB__CONNECTIONSTRING"] // Reads from environment variable
+            ));
 
         // Register repositories
         services.AddScoped<IProductRepository, ProductRepository>();
