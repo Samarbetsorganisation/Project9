@@ -67,4 +67,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s) \
-            --set-env-vars "APIKEY__VALUE=$APIKEY__VALUE;MongoDb__ConnectionString=$MONGODB__CONNECTIONSTRING"
+            --set-env-vars APIKEY__VALUE=$APIKEY__VALUE MongoDb__ConnectionString=$MONGODB__CONNECTIONSTRING
