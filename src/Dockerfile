@@ -7,9 +7,9 @@ COPY . /source
 WORKDIR /source/MerchStore.WebUI
 
 ARG TARGETARCH
-
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish -a ${TARGETARCH/amd64/x64} --use-current-runtime --self-contained false -o /app
+# Set DOTNET_ARCH based on the value of TARGETARCH
+RUN if [ "$TARGETARCH" = "amd64" ]; then export DOTNET_ARCH="x64"; else export DOTNET_ARCH="$TARGETARCH"; fi && \
+    dotnet publish -a ${DOTNET_ARCH:-x64} --use-current-runtime --self-contained false -o /app
 
 ################################################################################
 
