@@ -17,7 +17,7 @@ public class MongoDbContext
         var client = new MongoClient(mongoUrl);
 
         // Allow database name override via config or use what's in the connection string
-        var databaseName = configuration["MongoDb:DatabaseName"] ?? mongoUrl.DatabaseName ?? "WebShop";
+        var databaseName = configuration["MongoDb:DatabaseName"] ?? mongoUrl.DatabaseName ?? "webshop";
         Database = client.GetDatabase(databaseName);
     }
 }
