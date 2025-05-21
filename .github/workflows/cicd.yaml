@@ -35,7 +35,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     env:
-      APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
+      ApiKey__Value: ${{ secrets.APIKEY__VALUE }}
       SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
     steps:
       - name: Stop and remove existing container
@@ -44,7 +44,7 @@ jobs:
       - name: Start the new container
         run: |
           sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME \
-            -e APIKEY__VALUE="$APIKEY__VALUE" \
+            -e ApiKey__Value="$ApiKey__Value" \
             -e SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING" \
             $CONTAINER_IMAGE
 
@@ -52,7 +52,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     env:
-      APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
+      ApiKey__Value: ${{ secrets.APIKEY__VALUE }}
       SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
     steps:
       - name: Login to Azure
@@ -67,4 +67,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s) \
-            --set-env-vars APIKEY__VALUE="$APIKEY__VALUE" SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING"
+            --set-env-vars ApiKey__Value="$ApiKey__Value" SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING"
