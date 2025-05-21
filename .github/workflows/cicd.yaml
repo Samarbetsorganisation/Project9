@@ -45,7 +45,7 @@ jobs:
         run: |
           sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME \
             -e APIKEY__VALUE="$APIKEY__VALUE" \
-            -e MONGODB__CONNECTIONSTRING="$MONGODB__CONNECTIONSTRING" \
+            -e MongoDb__ConnectionString="$MONGODB__CONNECTIONSTRING" \
             $CONTAINER_IMAGE
 
   deploy_to_azure_container_apps:
