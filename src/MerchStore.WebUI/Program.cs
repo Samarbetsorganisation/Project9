@@ -35,6 +35,11 @@ builder.Services.AddAuthorization(options =>
 // Add Application services - this includes Services, Interfaces, etc.
 builder.Services.AddApplication();
 
+var mongoConnectionString = builder.Configuration["MongoDb:ConnectionString"]
+    ?? throw new InvalidOperationException("MongoDB ConnectionString is not configured in the application settings.");
+var mongoDatabaseName = builder.Configuration["MongoDb:Database"]
+    ?? throw new InvalidOperationException("MongoDB Database name is not configured in the application settings.");
+
 // Add Infrastructure services - this includes DbContext, Repositories, etc.
 builder.Services.AddInfrastructure(builder.Configuration);
 

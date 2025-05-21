@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.2.24128.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-preview.2.24128.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0-preview.2.24128.4" />
+    <PackageReference Include="MongoDB.Driver" Version="3.4.0" />
   </ItemGroup>
 
   <PropertyGroup>
