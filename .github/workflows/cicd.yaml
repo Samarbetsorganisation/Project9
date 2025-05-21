@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
-      MONGODB__CONNECTIONSTRING: ${{ secrets.MONGODB__CONNECTIONSTRING }}
+      SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
     steps:
       - name: Stop and remove existing container
         run: sudo docker stop $CONTAINER_APP_NAME || true && sudo docker rm $CONTAINER_APP_NAME || true
@@ -45,7 +45,7 @@ jobs:
         run: |
           sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME \
             -e APIKEY__VALUE="$APIKEY__VALUE" \
-            -e MongoDb__ConnectionString="$MONGODB__CONNECTIONSTRING" \
+            -e SqlDb__ConnectionString="$SQLDB__CONNECTIONSTRING" \
             $CONTAINER_IMAGE
 
   deploy_to_azure_container_apps:
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
-      MONGODB__CONNECTIONSTRING: ${{ secrets.MONGODB__CONNECTIONSTRING }}
+      SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
     steps:
       - name: Login to Azure
         uses: azure/login@v2
@@ -67,4 +67,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s) \
-            --set-env-vars APIKEY__VALUE=$APIKEY__VALUE MongoDb__ConnectionString=$MONGODB__CONNECTIONSTRING
+            --set-env-vars APIKEY__VALUE=$APIKEY__VALUE SqlDb__ConnectionString=$SQLDB__CONNECTIONSTRING
