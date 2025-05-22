@@ -3,14 +3,18 @@ using MerchStore.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using MerchStore.Application.Services.Interfaces;
 
 namespace MerchStore.Controllers
 {
     public class AccountController : Controller
     {
-        // Mocked user "database" for demonstration purposes.
-        private const string MockedUsername = "john.doe";
-        private const string MockedPassword = "pass"; // Note: NEVER hard-code passwords in real apps.
+        private readonly IAuthService _authService;
+
+        public AccountController(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
         // GET: /Account/Login
         [HttpGet]
@@ -24,17 +28,17 @@ namespace MerchStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
-            // Check model validators
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // Verify the user's credentials
-            if (model.Username == MockedUsername && model.Password == MockedPassword)
+            // Use null-forgiving operator (!) after model validation to suppress nullable warnings.
+            var user = await _authService.AuthenticateAsync(model.Username!, model.Password!);
+
+            if (user is not null)
             {
-                // ✅ Success: set up auth cookie
-                var claims = new[] { new Claim(ClaimTypes.Name, model.Username) };
+                var claims = new[] { new Claim(ClaimTypes.Name, user.Username) };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
@@ -43,13 +47,9 @@ namespace MerchStore.Controllers
             }
             else
             {
-                // ❌ Failed login: show Gandalf
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-
-                // Flag & URL for the view
                 ViewBag.ShowGandalf     = true;
                 ViewBag.GandalfVideoUrl = Url.Content("~/Videos/0521(1).mp4");
-
                 return View(model);
             }
         }

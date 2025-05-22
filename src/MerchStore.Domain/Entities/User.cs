@@ -11,7 +11,8 @@ public class User : Entity<Guid>
     // Navigation property
     public Cart? Cart { get; private set; }
 
-    private User() : base(Guid.Empty) { } // For EF Core
+    private User() : base() { } // For EF Core
+
 
     public User(string username, string passwordHash, bool isAdmin = false)
         : base(Guid.NewGuid())

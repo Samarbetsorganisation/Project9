@@ -41,6 +41,11 @@ public interface IRepositoryManager
     IProductRepository ProductRepository { get; }
 
     /// <summary>
+    /// Gets the user repository.
+    /// </summary>
+    IUserRepository UserRepository { get; }
+
+    /// <summary>
     /// Gets the unit of work to commit transactions.
     /// </summary>
     /// <remarks>
