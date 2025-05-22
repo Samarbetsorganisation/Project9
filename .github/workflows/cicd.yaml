@@ -37,6 +37,8 @@ jobs:
     env:
       APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
       SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
+      BLOBCONNECTIONSTRING: ${{ secrets.BLOBCONNECTIONSTRING }}
+      BLOBCONTAINERNAME: ${{ secrets.BLOBCONTAINERNAME }}
     steps:
       - name: Stop and remove existing container
         run: sudo docker stop $CONTAINER_APP_NAME || true && sudo docker rm $CONTAINER_APP_NAME || true
@@ -46,8 +48,9 @@ jobs:
           sudo docker run -d -p 80:8080 --name $CONTAINER_APP_NAME \
             -e APIKEY__VALUE="$APIKEY__VALUE" \
             -e SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING" \
+            -e BLOBCONNECTIONSTRING="$BLOBCONNECTIONSTRING" \
+            -e BLOBCONTAINERNAME="$BLOBCONTAINERNAME" \
             $CONTAINER_IMAGE
-
 
   deploy_to_azure_container_apps:
     needs: build_and_push
@@ -55,6 +58,8 @@ jobs:
     env:
       APIKEY__VALUE: ${{ secrets.APIKEY__VALUE }}
       SQLDB__CONNECTIONSTRING: ${{ secrets.SQLDB__CONNECTIONSTRING }}
+      BLOBCONNECTIONSTRING: ${{ secrets.BLOBCONNECTIONSTRING }}
+      BLOBCONTAINERNAME: ${{ secrets.BLOBCONTAINERNAME }}
     steps:
       - name: Login to Azure
         uses: azure/login@v2
@@ -68,4 +73,4 @@ jobs:
             --resource-group $RESOURCE_GROUP \
             --image $CONTAINER_IMAGE \
             --revision-suffix $(date +%s) \
-            --set-env-vars APIKEY__VALUE="$APIKEY__VALUE" SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING"
+            --set-env-vars APIKEY__VALUE="$APIKEY__VALUE" SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING" BLOBCONNECTIONSTRING="$BLOBCONNECTIONSTRING" BLOBCONTAINERNAME="$BLOBCONTAINERNAME"
