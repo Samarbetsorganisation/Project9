@@ -48,10 +48,6 @@ jobs:
             -e SQLDB__CONNECTIONSTRING="$SQLDB__CONNECTIONSTRING" \
             $CONTAINER_IMAGE
 
-      - name: Debug secret values
-        run: |
-          echo "APIKEY__VALUE length: ${#APIKEY__VALUE}"
-          echo "SQLDB__CONNECTIONSTRING length: ${#SQLDB__CONNECTIONSTRING}"
 
   deploy_to_azure_container_apps:
     needs: build_and_push

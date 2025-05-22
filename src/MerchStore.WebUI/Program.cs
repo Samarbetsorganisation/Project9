@@ -8,15 +8,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-foreach (System.Collections.DictionaryEntry env in Environment.GetEnvironmentVariables())
-{
-    Console.WriteLine($"ENV: '{env.Key}' = '{env.Value}'");
-}
 
-Console.WriteLine("CONFIG: SQLDB__CONNECTIONSTRING = '" + (builder.Configuration["SQLDB__CONNECTIONSTRING"] ?? "NULL") + "'");
-Console.WriteLine("CONFIG: SqlDb:ConnectionString = '" + (builder.Configuration["SqlDb:ConnectionString"] ?? "NULL") + "'");
-
-Console.WriteLine("SQLDB__CONNECTIONSTRING: " + builder.Configuration["SQLDB__CONNECTIONSTRING"]);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
