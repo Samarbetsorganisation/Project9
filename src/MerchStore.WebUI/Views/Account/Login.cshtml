@@ -1,0 +1,147 @@
+@model MerchStore.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .login-card {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 215, 0, 0.2);
+        border-radius: 1rem;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.1);
+        color: white;
+    }
+
+    .login-header {
+        background-color: rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+        font-weight: bold;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        padding: 1rem 1.5rem;
+    }
+
+    .login-body {
+        padding: 2rem;
+    }
+
+    .login-footer {
+        background-color: transparent;
+        color: #ccc;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        padding: 1rem;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #ccc;
+        color: white;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #ffd700;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .btn-primary {
+        background-color: #ffd700;
+        color: black;
+        font-weight: bold;
+        border: none;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #ffe66b;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+
+    .text-danger {
+        color: #ff6b6b !important;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card login-card shadow">
+            <div class="login-header">
+                <h2 class="fs-4 mb-0">@ViewData["Title"]</h2>
+            </div>
+            <div class="login-body">
+                <form method="post" asp-antiforgery="true">
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label">Username</label>
+                        <input asp-for="Username" class="form-control" autocomplete="username" aria-required="true" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary w-100">Log in</button>
+                    </div>
+                </form>
+            </div>
+            <div class="login-footer text-center">
+                <small><i class="bi bi-info-circle"></i> For testing, use <code>john.doe</code> / <code>pass</code></small>
+            </div>
+        </div>
+    </div>
+</div>
+@* 🎥 Gandalf Modal *@
+
+@if ((bool?)ViewBag.ShowGandalf == true)
+{
+    <div id="gandalfModal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 bg-transparent">
+                <div class="modal-body p-0 text-center">
+                    <div class="gandalf-frame mb-3">
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="@ViewBag.GandalfVideoUrl"
+                                class="rounded"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <p class="text-warning-emphasis wrong-login-msg">
+                         Wrong username or password
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var showGandalf = @((ViewBag.ShowGandalf ?? false).ToString().ToLower());
+            if (showGandalf) {
+                var modalEl = document.getElementById('gandalfModal');
+                var bsModal = new bootstrap.Modal(modalEl);
+                bsModal.show();
+            }
+        });
+    </script>
+}
