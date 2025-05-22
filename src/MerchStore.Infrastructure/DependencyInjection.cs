@@ -25,7 +25,7 @@ public static class DependencyInjection
         // Register DbContext with SQL Server using environment variable from GitHub Secrets
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
-                configuration["SQLDB__CONNECTIONSTRING"] // Reads from environment variable
+                configuration["SqlDb:ConnectionString"] // Reads from environment variable
             ));
 
         // Register repositories
