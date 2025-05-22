@@ -49,4 +49,14 @@ public class BasicProductDto
     /// Indicates whether the product is currently in stock
     /// </summary>
     public bool InStock => StockQuantity > 0;
+
+    /// <summary>
+    /// The category of the product
+    /// </summary>
+    public string Category { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The tags associated with the product
+    /// </summary>
+    public List<string> Tags { get; set; } = new();
 }

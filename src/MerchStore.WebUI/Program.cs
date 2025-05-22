@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ──────────────────────────────
-// 1) SERVICE REGISTRATION
-// ──────────────────────────────
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
 // MVC + JSON options
 builder.Services.AddControllersWithViews()
@@ -86,16 +85,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
-// ──────────────────────────────
-// 2) BUILD
-// ──────────────────────────────
-
-var app = builder.Build();
-
-// ──────────────────────────────
-// 3) HTTP REQUEST PIPELINE
-// ──────────────────────────────
-
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -106,9 +96,6 @@ else
     // Seed test data in dev
     app.Services.SeedDatabaseAsync().Wait();
 }
-
-// TEMP: always seed (remove in prod!)
-app.Services.SeedDatabaseAsync().Wait();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -140,5 +127,3 @@ app.Run();
 // in Program.cs or Startup.cs
 app.UseStaticFiles();
 app.UseStaticFiles();
-
-

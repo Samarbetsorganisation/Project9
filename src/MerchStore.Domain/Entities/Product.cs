@@ -12,14 +12,27 @@ public class Product : Entity<Guid>
     public int StockQuantity { get; private set; } = 0;
     public Uri? ImageUrl { get; private set; } = null;
 
+    // New properties for Category and Tags
+    public string Category { get; private set; } = string.Empty;
+    public List<string> Tags { get; private set; } = new();
+
     // Private parameterless constructor for EF Core
     private Product()
     {
         // Required for EF Core, but we don't want it to be used directly
+        Tags = new List<string>();
     }
 
     // Public constructor with required parameters
-    public Product(string name, string description, Uri? imageUrl, Money price, int stockQuantity) : base(Guid.NewGuid())
+    public Product(
+        string name, 
+        string description, 
+        Uri? imageUrl, 
+        Money price, 
+        int stockQuantity,
+        string category,
+        IEnumerable<string>? tags = null
+    ) : base(Guid.NewGuid())
     {
         // Validate parameters
         if (string.IsNullOrWhiteSpace(name))
@@ -59,16 +72,21 @@ public class Product : Entity<Guid>
         if (stockQuantity < 0)
             throw new ArgumentException("Stock quantity cannot be negative", nameof(stockQuantity));
 
+        if (string.IsNullOrWhiteSpace(category))
+            throw new ArgumentException("Category cannot be empty", nameof(category));
+
         // Set properties
         Name = name;
         Description = description;
         ImageUrl = imageUrl;
         Price = price;
         StockQuantity = stockQuantity;
+        Category = category;
+        Tags = tags?.ToList() ?? new List<string>();
     }
 
     // Domain methods that encapsulate business logic
-    public void UpdateDetails(string name, string description, Uri? imageUrl)
+    public void UpdateDetails(string name, string description, Uri? imageUrl, string category, IEnumerable<string>? tags = null)
     {
         // Validate name with clear domain rules
         if (string.IsNullOrWhiteSpace(name))
@@ -83,6 +101,9 @@ public class Product : Entity<Guid>
 
         if (description.Length > 500)
             throw new ArgumentException("Description cannot exceed 500 characters", nameof(description));
+
+        if (string.IsNullOrWhiteSpace(category))
+            throw new ArgumentException("Category cannot be empty", nameof(category));
 
         // Image URI validation
         if (imageUrl != null)
@@ -107,6 +128,8 @@ public class Product : Entity<Guid>
         Name = name;
         Description = description;
         ImageUrl = imageUrl;  // Assuming the property name has been updated to imageUrl
+        Category = category;
+        Tags = tags?.ToList() ?? new List<string>();
     }
 
     public void UpdatePrice(Money newPrice)
@@ -123,7 +146,6 @@ public class Product : Entity<Guid>
 
         StockQuantity = quantity;
     }
-
 
     public bool DecrementStock(int quantity = 1)
     {
