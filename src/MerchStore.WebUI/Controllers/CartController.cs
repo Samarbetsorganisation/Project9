@@ -17,8 +17,6 @@ namespace MerchStore.Controllers
                 {
                     new() { ProductName="🧁 Cupcake", UnitPrice=2.50m, Quantity=3 },
                     new() { ProductName="🍞 Bread Loaf", UnitPrice=1.20m, Quantity=2 },
-                    new() { ProductName="𓀐𓂸 Dildo", UnitPrice=500m, Quantity=1 },
-
                 }
             };
             vm.TotalPrice = vm.Items.Sum(i => i.Subtotal);
