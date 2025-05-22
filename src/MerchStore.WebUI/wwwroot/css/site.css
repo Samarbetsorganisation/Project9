@@ -133,7 +133,7 @@ html, body {
   min-height: 100vh;
   text-align: center;
   font-family: 'MedievalSharp', cursive;
-  background: url('/images/background.gif') no-repeat center center fixed;
+  background: url('/Images/background.gif') no-repeat center center fixed;
   background-size: cover;
   color: #f5e8c7; /* Golden Grace text */
   padding: 50px;
