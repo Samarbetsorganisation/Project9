@@ -88,7 +88,7 @@
 
                     <div class="mb-4">
                         <label asp-for="Password" class="form-label">Password</label>
-                        <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <input asp-for="Password" type="password" class="form-control" autocomplete="current-password" aria-required="true" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
@@ -103,7 +103,45 @@
         </div>
     </div>
 </div>
+@* 🎥 Gandalf Modal *@
+
+@if ((bool?)ViewBag.ShowGandalf == true)
+{
+    <div id="gandalfModal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 bg-transparent">
+                <div class="modal-body p-0 text-center">
+                    <div class="gandalf-frame mb-3">
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="@ViewBag.GandalfVideoUrl"
+                                class="rounded"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <p class="text-warning-emphasis wrong-login-msg">
+                         Wrong username or password
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var showGandalf = @((ViewBag.ShowGandalf ?? false).ToString().ToLower());
+            if (showGandalf) {
+                var modalEl = document.getElementById('gandalfModal');
+                var bsModal = new bootstrap.Modal(modalEl);
+                bsModal.show();
+            }
+        });
+    </script>
 }

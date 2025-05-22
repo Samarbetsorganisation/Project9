@@ -353,3 +353,44 @@ a:focus {
 #dropdownNavbar.animate-in {
     animation: fadeInDropdown 0.3s ease-out;
 }
+
+
+
+
+/* 🎥 Fancy Gandalf Frame */
+.gandalf-frame {
+    border: 6px double #ffd700;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 215, 0, 0.05));
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.2),
+        0 0 40px rgba(255, 215, 0, 0.3),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+/* Optional glow when hovered or shown */
+.gandalf-frame:hover {
+    box-shadow:
+        0 0 30px rgba(255, 215, 0, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+
+.wrong-login-msg {
+    font-size: 1rem;
+    color: #e54922;
+    text-shadow: 0 0 6px rgba(255, 60, 0, 0.5);
+    animation: pulseWarning 1.2s ease-in-out infinite alternate;
+    margin-bottom: 1rem;
+}
+
+@keyframes pulseWarning {
+    from {
+        opacity: 0.6;
+    }
+    to {
+        opacity: 1;
+    }
+}

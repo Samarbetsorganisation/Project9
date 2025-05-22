@@ -20,3 +20,9 @@ if (dropdownToggle && dropdownMenu) {
         }
     });
 }
+
+var bsModal = new bootstrap.Modal(modalEl, {
+    backdrop: 'static',
+    keyboard: true
+});
+

@@ -137,3 +137,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+// in Program.cs or Startup.cs
+app.UseStaticFiles();
+app.UseStaticFiles();
+
+

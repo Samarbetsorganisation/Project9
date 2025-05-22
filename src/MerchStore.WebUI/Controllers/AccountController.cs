@@ -4,59 +4,63 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MerchStore.Controllers;
-
-public class AccountController : Controller
+namespace MerchStore.Controllers
 {
-    // Mocked user "database" for demonstration purposes.
-    private const string MockedUsername = "john.doe";
-    private const string MockedPassword = "pass"; // Note: NEVER hard-code passwords in real applications.
-
-    // This is a simple login page that allows users to enter their credentials.
-    [HttpGet]
-    public IActionResult Login()
+    public class AccountController : Controller
     {
-        return View();
-    }
+        // Mocked user "database" for demonstration purposes.
+        private const string MockedUsername = "john.doe";
+        private const string MockedPassword = "pass"; // Note: NEVER hard-code passwords in real apps.
 
-    // This action handles the login form submission.
-    [HttpPost]
-    [ValidateAntiForgeryToken] // This ensures that the form is submitted with a valid anti-forgery token to prevent CSRF attacks.
-    public async Task<IActionResult> LoginAsync(LoginViewModel model)
-    {
-        // Check model validators
-        if (!ModelState.IsValid)
+        // GET: /Account/Login
+        [HttpGet]
+        public IActionResult Login()
         {
-            return View(model);
+            return View();
         }
 
-        // Verify the user's credentials against the mocked database.
-        if (model.Username == MockedUsername && model.Password == MockedPassword)
+        // POST: /Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginAsync(LoginViewModel model)
         {
-            // Set up the session/cookie for the authenticated user.
-            var claims = new[] { new Claim(ClaimTypes.Name, model.Username) };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
+            // Check model validators
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            // Sign in the user with the cookie authentication scheme.
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            // Verify the user's credentials
+            if (model.Username == MockedUsername && model.Password == MockedPassword)
+            {
+                // ✅ Success: set up auth cookie
+                var claims = new[] { new Claim(ClaimTypes.Name, model.Username) };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            // Redirect to a secure area of your application
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                // ❌ Failed login: show Gandalf
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+
+                // Flag & URL for the view
+                ViewBag.ShowGandalf     = true;
+                ViewBag.GandalfVideoUrl = Url.Content("~/Videos/0521(1).mp4");
+
+                return View(model);
+            }
+        }
+
+        // POST: /Account/Logout
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
-
-        ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Generic error message for security reasons.
-        return View(model);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Logout()
-    {
-        // Sign out the user by removing the authentication cookie.
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-        // Redirect to a public area of your application
-        return RedirectToAction("Index", "Home");
     }
 }
