@@ -379,7 +379,7 @@ a:focus {
 
 
 .wrong-login-msg {
-    font-size: 1rem;
+    font-size: 4rem;
     color: #e54922;
     text-shadow: 0 0 6px rgba(255, 60, 0, 0.5);
     animation: pulseWarning 1.2s ease-in-out infinite alternate;
