@@ -5,6 +5,8 @@ using MerchStore.Application.Common.Interfaces;
 using MerchStore.Domain.Interfaces;
 using MerchStore.Infrastructure.Persistence;
 using MerchStore.Infrastructure.Persistence.Repositories;
+using MerchStore.Application.Services.Interfaces;
+using MerchStore.Infrastructure.Blob;
 
 namespace MerchStore.Infrastructure;
 
@@ -37,6 +39,19 @@ public static class DependencyInjection
 
         // Register Repository Manager
         services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        // === BLOB STORAGE CONFIGURATION ===
+        // Manually bind options from environment variables (keeps BLOBCONNECTIONSTRING and BLOBCONTAINERNAME as is)
+        services.Configure<BlobStorageOptions>(options =>
+        {
+            options.ConnectionString = Environment.GetEnvironmentVariable("BLOBCONNECTIONSTRING") 
+                ?? throw new InvalidOperationException("BLOBCONNECTIONSTRING is not set");
+            options.ContainerName = Environment.GetEnvironmentVariable("BLOBCONTAINERNAME") 
+                ?? throw new InvalidOperationException("BLOBCONTAINERNAME is not set");
+        });
+
+        // Register Blob service
+        services.AddScoped<IImageUploadService, AzureBlobImageUploadService>();
 
         // Add logging services if not already added
         services.AddLogging();

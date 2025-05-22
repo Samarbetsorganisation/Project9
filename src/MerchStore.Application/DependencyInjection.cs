@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MerchStore.Application.Services.Implementations;
 using MerchStore.Application.Services.Interfaces;
 
+
 namespace MerchStore.Application;
 
 /// <summary>
