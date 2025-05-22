@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-  <ProjectReference Include="..\MerchStore.Infrastructure\MerchStore.Infrastructure.csproj" />
-  <ProjectReference Include="..\MerchStore.Application\MerchStore.Application.csproj" />
-  <Content Include="wwwroot/**" />
-</ItemGroup>
-
+    <ProjectReference Include="..\MerchStore.Infrastructure\MerchStore.Infrastructure.csproj" />
+    <ProjectReference Include="..\MerchStore.Application\MerchStore.Application.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.14.0" />
