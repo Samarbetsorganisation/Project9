@@ -485,3 +485,6 @@ $RECYCLE.BIN/
 
 # Ignore Azureinfo folder and all its contents
 Azureinfo/
+
+# Ignore environment variable files
+.env
