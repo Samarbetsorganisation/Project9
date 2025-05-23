@@ -30,13 +30,21 @@ namespace MerchStore.Infrastructure.Services
 
         public async Task<ExternalApiLoginResponse> LoginAsync(string username, string password)
         {
-            // The API doc specifies authType: "basic" in the body for login
-            var requestBody = new { authType = "basic" }; 
+            // The API doc (1.2) specifies username, password, and authType: "password" in the body for login.
+            var requestBody = new 
+            { 
+                username = username, 
+                password = password, 
+                authType = "password" 
+            }; 
             var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
             // Basic authentication header
-            var basicAuthHeaderValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthHeaderValue);
+            //var basicAuthHeaderValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthHeaderValue);
+            
+            // Ensure any previous Authorization header from other calls is cleared before this unauthenticated call
+            _httpClient.DefaultRequestHeaders.Authorization = null;
 
             try
             {
@@ -46,7 +54,7 @@ namespace MerchStore.Infrastructure.Services
                 {
                     var loginResponse = await response.Content.ReadFromJsonAsync<ExternalApiLoginResponse>(_jsonSerializerOptions);
                     // Clear Basic Auth after login if subsequent requests use Bearer token
-                     _httpClient.DefaultRequestHeaders.Authorization = null;
+                    _httpClient.DefaultRequestHeaders.Authorization = null;
                     return loginResponse;
                 }
                 else
@@ -64,7 +72,7 @@ namespace MerchStore.Infrastructure.Services
             }
             finally
             {
-                 // Ensure Basic Auth header is cleared if it's not needed for other requests
+                // Ensure Basic Auth header is cleared if it's not needed for other requests
                 _httpClient.DefaultRequestHeaders.Authorization = null;
             }
         }
