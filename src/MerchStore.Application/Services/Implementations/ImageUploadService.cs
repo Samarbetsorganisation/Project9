@@ -28,4 +28,7 @@ public class ImageUploadService : IImageUploadService
         string contentType,
         CancellationToken cancellationToken = default
     ) => _imageUploadProvider.UploadImageAsync(imageStream, fileName, contentType, cancellationToken);
+
+    public Task DeleteImageAsync(string imageIdentifier, CancellationToken cancellationToken = default)
+        => _imageUploadProvider.DeleteImageAsync(imageIdentifier, cancellationToken);
 }

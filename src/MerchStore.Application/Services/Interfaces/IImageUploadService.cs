@@ -23,4 +23,7 @@ public interface IImageUploadService
         string contentType,
         CancellationToken cancellationToken = default
     );
+
+
+    Task DeleteImageAsync(string imageIdentifier, CancellationToken cancellationToken = default);
 }
