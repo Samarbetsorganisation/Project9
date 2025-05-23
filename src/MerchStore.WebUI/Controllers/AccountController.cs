@@ -33,14 +33,25 @@ namespace MerchStore.Controllers
                 return View(model);
             }
 
-            // Use null-forgiving operator (!) after model validation to suppress nullable warnings.
+            // Authenticate user
             var user = await _authService.AuthenticateAsync(model.Username!, model.Password!);
 
             if (user is not null)
             {
-                var claims = new[] { new Claim(ClaimTypes.Name, user.Username) };
+                // Add the "Admin" role claim if the user is admin
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username)
+                };
+
+                if (user.IsAdmin)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                }
+
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
+
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 return RedirectToAction("Index", "Home");

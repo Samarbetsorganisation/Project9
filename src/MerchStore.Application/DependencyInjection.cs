@@ -20,6 +20,7 @@ public static class DependencyInjection
         // Register application services
         services.AddScoped<ICatalogService, CatalogService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IProductAdminService, ProductAdminService>();
 
         return services;
     }

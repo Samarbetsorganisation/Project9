@@ -22,10 +22,9 @@
         <nav class="rounded-3xl border-2 border-yellow-400 shadow-lg shadow-yellow-300/50 backdrop-blur-lg bg-black bg-opacity-40 text-white mx-auto max-w-screen-xl my-4">
             <div class="flex flex-col md:flex-row justify-center items-center text-center p-4 space-y-4 md:space-y-0 md:space-x-6">
                 <a asp-controller="Home" asp-action="Index" class="flex items-center space-x-3">
-    <img src="/Images/Ring2.png" class="h-32 md:h-40" alt="Logo" />
-    <span class="text-3xl font-bold text-yellow-300"></span>
-</a>
-
+                    <img src="/Images/Ring2.png" class="h-32 md:h-40" alt="Logo" />
+                    <span class="text-3xl font-bold text-yellow-300"></span>
+                </a>
 
                 <div class="flex flex-col md:flex-row items-center text-center">
                     <a asp-controller="Home" asp-action="Index"
@@ -40,6 +39,14 @@
                         class="block py-2 px-4 text-white hover:text-yellow-300 transition-all">
                         Cart
                     </a>
+                    @* Admin Product Management button - only visible to Admins *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="AdminProducts" asp-action="Index"
+                           class="block py-2 px-4 text-white bg-yellow-500 hover:bg-yellow-600 rounded-md transition-all mx-2">
+                            Product management
+                        </a>
+                    }
                     <partial name="_LoginPartial" />
 
                     <button id="dropdownNavbarLink"
@@ -50,46 +57,41 @@
                 </div>
             </div>
 
-<!-- Dropdown menu -->
-@using System.Security.Claims
+            <!-- Dropdown menu -->
+            @using System.Security.Claims
 
-<!-- Dropdown menu -->
-<!-- Dropdown menu -->
-<div id="dropdownNavbar" class="hidden mx-auto">
-  <!-- 🧙‍♂️ User Greeting Header -->
-  <div class="user-header">
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-      <span>🎉 Welcome @User.Identity.Name!</span><br />
-      <span class="email">@User.FindFirst(ClaimTypes.Email)?.Value</span>
-    }
-    else
-    {
-      <span>👋 Hello, Guest!</span>
-    }
-  </div>
+            <div id="dropdownNavbar" class="hidden mx-auto">
+                <!-- 🧙‍♂️ User Greeting Header -->
+                <div class="user-header">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <span>🎉 Welcome @User.Identity.Name!</span><br />
+                        <span class="email">@User.FindFirst(ClaimTypes.Email)?.Value</span>
+                    }
+                    else
+                    {
+                        <span>👋 Hello, Guest!</span>
+                    }
+                </div>
 
-  <!-- 📋 Menu Items -->
-  <ul>
-    @if (User.Identity?.IsAuthenticated != true)
-    {
-      <li>
-        <a asp-controller="Account" asp-action="Login">Login</a>
-      </li>
-    }
-    else
-    {
-      <li>
-        <form method="post" asp-controller="Account" asp-action="Logout">
-          <button type="submit">         Sign out</button>
-        </form>
-      </li>
-    }
-    <li><a href="#">Settings</a></li>
-  </ul>
-</div>
-
-
+                <!-- 📋 Menu Items -->
+                <ul>
+                    @if (User.Identity?.IsAuthenticated != true)
+                    {
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                <button type="submit">Sign out</button>
+                            </form>
+                        </li>
+                    }
+                    <li><a href="#">Settings</a></li>
+                </ul>
             </div>
         </nav>
     </header>

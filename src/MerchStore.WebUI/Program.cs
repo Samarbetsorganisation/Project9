@@ -100,7 +100,7 @@ if (!app.Environment.IsDevelopment())
 else
 {
     // Seed test data in dev
-    app.Services.SeedDatabaseAsync().Wait();
+    //app.Services.SeedDatabaseAsync().Wait();
 }
 
 app.UseHttpsRedirection();
