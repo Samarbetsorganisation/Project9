@@ -4,31 +4,45 @@
     ViewData["Title"] = "Product Details";
 }
 
-<h1>Product Details</h1>
+<section class="mx-auto max-w-3xl mt-10 p-6 rounded-2xl shadow-2xl backdrop-blur-md bg-black bg-opacity-60 text-yellow-100 border border-yellow-700">
+    <h1 class="text-4xl text-yellow-400 font-bold text-center mb-8 drop-shadow-md">
+         Product Details
+    </h1>
 
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row g-0">
-        <div class="col-md-4">
+    <div class="flex flex-col md:flex-row gap-6 bg-black bg-opacity-40 p-6 rounded-xl shadow-md border border-yellow-700">
+        <!-- 📸 Image side -->
+        <div class="md:w-1/3 flex items-center justify-center">
             @if (!string.IsNullOrWhiteSpace(Model.ExistingImageUrl))
             {
-                <img src="@Model.ExistingImageUrl" class="img-fluid rounded-start" alt="Product Image" />
+                <img src="@Model.ExistingImageUrl"
+                     alt="Product Image"
+                     class="rounded-xl border-2 border-yellow-500 shadow-lg max-w-full h-auto object-cover" />
             }
             else
             {
-                <span class="text-muted">No image uploaded.</span>
+                <span class="text-gray-400 italic text-center">No image uploaded.</span>
             }
         </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">@Model.Name</h5>
-                <p class="card-text">@Model.Description</p>
-                <p class="card-text"><strong>Price:</strong> @Model.PriceAmount.ToString("C")</p>
-                <p class="card-text"><strong>Stock:</strong> @Model.StockQuantity</p>
-                <p class="card-text"><strong>Category:</strong> @Model.Category</p>
-                <p class="card-text"><strong>Tags:</strong> @Model.Tags</p>
-            </div>
+
+        <!-- 📋 Info side -->
+        <div class="md:w-2/3 space-y-4 text-lg">
+            <p><span class="text-yellow-300 font-semibold"> Name:</span> @Model.Name</p>
+            <p><span class="text-yellow-300 font-semibold"> Description:</span> @Model.Description</p>
+            <p><span class="text-yellow-300 font-semibold"> Price:</span> @Model.PriceAmount.ToString("C")</p>
+            <p><span class="text-yellow-300 font-semibold"> Stock:</span> @Model.StockQuantity</p>
+            <p><span class="text-yellow-300 font-semibold"> Category:</span> @Model.Category</p>
+            <p><span class="text-yellow-300 font-semibold"> Tags:</span> @Model.Tags</p>
         </div>
     </div>
-</div>
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+    <div class="mt-8 flex justify-end gap-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id"
+           class="px-6 py-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded shadow transition">
+             Edit
+        </a>
+        <a asp-action="Index"
+           class="px-6 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded shadow transition">
+            ← Back to List
+        </a>
+    </div>
+</section>

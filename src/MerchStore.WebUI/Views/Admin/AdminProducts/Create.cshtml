@@ -4,53 +4,62 @@
     ViewData["Title"] = "Create Product";
 }
 
-<h1>Create Product</h1>
+<section class="mx-auto max-w-3xl mt-10 p-6 rounded-xl shadow-xl backdrop-blur-md bg-black bg-opacity-50 text-yellow-100">
+    <h1 class="text-3xl text-yellow-300 font-bold text-center mb-6">Create New Product 🧾</h1>
 
-<form asp-action="Create" enctype="multipart/form-data" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="PriceAmount"></label>
-        <input asp-for="PriceAmount" class="form-control" />
-        <span asp-validation-for="PriceAmount" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="StockQuantity"></label>
-        <input asp-for="StockQuantity" class="form-control" />
-        <span asp-validation-for="StockQuantity" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Category"></label>
-        <input asp-for="Category" class="form-control" />
-        <span asp-validation-for="Category" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="Tags"></label>
-        <input asp-for="Tags" class="form-control" placeholder="Comma separated: e.g. hoodie, blue, sale" />
-        <span asp-validation-for="Tags" class="text-danger"></span>
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="ImageFile"></label>
-        <input asp-for="ImageFile" type="file" class="form-control" />
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" enctype="multipart/form-data" method="post" class="space-y-6">
+        <div asp-validation-summary="ModelOnly" class="text-red-400 text-sm text-center mb-4"></div>
 
-    <button type="submit" class="btn btn-success">Create</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+        <div>
+            <label asp-for="Name" class="block font-semibold mb-1">Name</label>
+            <input asp-for="Name" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300 focus:ring-yellow-400" />
+            <span asp-validation-for="Name" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Description" class="block font-semibold mb-1">Description</label>
+            <textarea asp-for="Description" rows="3" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300 focus:ring-yellow-400"></textarea>
+            <span asp-validation-for="Description" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="PriceAmount" class="block font-semibold mb-1">Price (€)</label>
+            <input asp-for="PriceAmount" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300" />
+            <span asp-validation-for="PriceAmount" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="StockQuantity" class="block font-semibold mb-1">Stock Quantity</label>
+            <input asp-for="StockQuantity" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300" />
+            <span asp-validation-for="StockQuantity" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Category" class="block font-semibold mb-1">Category</label>
+            <input asp-for="Category" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300" />
+            <span asp-validation-for="Category" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="Tags" class="block font-semibold mb-1">Tags</label>
+            <input asp-for="Tags" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300"
+                   placeholder="Comma separated: e.g. hoodie, blue, sale" />
+            <span asp-validation-for="Tags" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div>
+            <label asp-for="ImageFile" class="block font-semibold mb-1">Upload Image</label>
+            <input asp-for="ImageFile" type="file" class="w-full p-2 rounded bg-gray-800 text-white border border-yellow-300" />
+            <span asp-validation-for="ImageFile" class="text-red-400 text-sm"></span>
+        </div>
+
+        <div class="flex justify-end space-x-4 pt-4">
+            <button type="submit" class="px-6 py-2 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded shadow">
+                ➕ Create
+            </button>
+            <a asp-action="Index" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded shadow">
+                ← Cancel
+            </a>
+        </div>
+    </form>
+</section>

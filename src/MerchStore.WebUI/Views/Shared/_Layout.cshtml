@@ -39,14 +39,7 @@
                         class="block py-2 px-4 text-white hover:text-yellow-300 transition-all">
                         Cart
                     </a>
-                    @* Admin Product Management button - only visible to Admins *@
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-controller="AdminProducts" asp-action="Index"
-                           class="block py-2 px-4 text-white bg-yellow-500 hover:bg-yellow-600 rounded-md transition-all mx-2">
-                            Product management
-                        </a>
-                    }
+                    
                     <partial name="_LoginPartial" />
 
                     <button id="dropdownNavbarLink"
@@ -90,7 +83,12 @@
                             </form>
                         </li>
                     }
-                    <li><a href="#">Settings</a></li>
+                    @* Admin Product Management button - only visible to Admins *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a asp-controller="AdminProducts" asp-action="Index">Product management</a></li>
+                    }
+
                 </ul>
             </div>
         </nav>

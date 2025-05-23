@@ -4,50 +4,56 @@
     ViewData["Title"] = "Admin - Products";
 }
 
-<h1>Admin - Products</h1>
+<section class="mx-auto max-w-6xl mt-10 p-6 rounded-xl shadow-xl backdrop-blur-md bg-black bg-opacity-50 text-yellow-100">
+    <h1 class="text-3xl font-bold text-yellow-300 text-center mb-6">Admin - Products 🧾</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create New Product</a>
-</p>
+    <div class="text-center mb-6">
+        <a class="px-6 py-2 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400 transition shadow-md" asp-action="Create">
+            ➕ Create New Product
+        </a>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Category</th>
-            <th>Tags</th>
-            <th>Image</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-    <tr>
-        <td>@item.Name</td>
-        <td>@item.Price.Amount.ToString("C")</td>
-        <td>@item.StockQuantity</td>
-        <td>@item.Category</td>
-        <td>
-            @if (item.Tags != null && item.Tags.Any())
-            {
-                @string.Join(", ", item.Tags)
-            }
-        </td>
-        <td>
-            @if (item.ImageUrl != null)
-            {
-                <img src="@item.ImageUrl" alt="Product Image" style="max-width: 60px; max-height: 60px;" />
-            }
-        </td>
-        <td>
-            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
-            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
-            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
-        </td>
-    </tr>
-}
-    </tbody>
-</table>
+    <div class="overflow-auto rounded-lg">
+        <table class="w-full table-auto text-left border-collapse">
+            <thead class="bg-yellow-800 bg-opacity-30 text-yellow-300 uppercase text-sm">
+                <tr>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Price</th>
+                    <th class="p-3">Stock</th>
+                    <th class="p-3">Category</th>
+                    <th class="p-3">Tags</th>
+                    <th class="p-3">Image</th>
+                    <th class="p-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-white text-sm divide-y divide-yellow-700">
+                @foreach (var item in Model)
+                {
+                    <tr class="hover:bg-yellow-900 hover:bg-opacity-10 transition">
+                        <td class="p-3">@item.Name</td>
+                        <td class="p-3">@item.Price.Amount.ToString("C")</td>
+                        <td class="p-3">@item.StockQuantity</td>
+                        <td class="p-3">@item.Category</td>
+                        <td class="p-3">
+                            @if (item.Tags != null && item.Tags.Any())
+                            {
+                                @string.Join(", ", item.Tags)
+                            }
+                        </td>
+                        <td class="p-3">
+                            @if (item.ImageUrl != null)
+                            {
+                                <img src="@item.ImageUrl" alt="Product Image" class="w-14 h-14 object-cover rounded shadow-md" />
+                            }
+                        </td>
+                        <td class="p-3 text-center space-x-2">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs shadow">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-black rounded text-xs shadow">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs shadow">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
