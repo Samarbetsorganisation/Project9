@@ -1,3 +1,37 @@
+@font-face {
+    font-family: 'lotr'; /* Your chosen name for the font */
+    src: url('/fonts/lotr.TTF') format('truetype'); /* Path to your font file from wwwroot */
+}
+
+/* 🔥 Layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+  font-family: 'lotr', 'MedievalSharp', cursive; /* Primary font definition */
+  background: url('/Images/background.gif') no-repeat center center fixed;
+  background-size: cover;
+  color: #f5e8c7; /* Golden Grace text */
+  padding: 20px 50px;
+}
+
+/* 🔥 Comprehensive Font Application for Common Elements */
+/* This rule helps ensure the 'lotr' font is applied more broadly.
+   More specific rules later in the stylesheet can still override this. */
+h1, h2, h3, h4, h5, h6,
+p, li, dt, dd,
+span, div, blockquote, q,
+label, button,
+input, select, textarea, option, optgroup, legend, /* General form elements */
+th, td, caption {
+    font-family: 'lotr', 'MedievalSharp', cursive; /* Apply 'lotr' with fallbacks */
+}
+/* Note: Styling for specific input types like placeholders or file inputs might need separate, more specific rules. */
+
+
 /* 🔥 Proper Horizontal Navbar */
 nav.navbar {
   background: rgba(0, 0, 0, 0.1) !important;
@@ -23,6 +57,7 @@ nav .nav-list li {
 
 /* Styles for links */
 nav .nav-link {
+  font-family: 'lotr', 'MedievalSharp', cursive;
   color: #665353 !important;
   text-decoration: none;
   font-weight: bold;
@@ -37,6 +72,7 @@ nav .nav-link:hover {
 /* 🔥 Navbar Title Alignment */
 nav.navbar h1,
 .navbar-brand {
+  font-family: 'lotr', 'MedievalSharp', cursive;
   margin-right: auto;
   color: gold !important;
   font-size: 1.5rem;
@@ -54,11 +90,13 @@ nav.navbar h1,
 
 .navbar-nav .nav-item {
   margin: 0 15px;
+  font-family: 'lotr', 'MedievalSharp', cursive;
 }
 
 /* 🔥 Navbar Toggle */
 .navbar-toggler {
   border-color: gold;
+  font-family: 'lotr', 'MedievalSharp', cursive; /* Ensures toggler icon/text uses the font */
 }
 
 /* 🔥 Responsive Navbar */
@@ -81,6 +119,7 @@ nav.navbar h1,
 
 /* 🔥 Elden Button */
 .elden-button {
+  font-family: 'lotr', 'MedievalSharp', sans-serif;
   background-color: transparent;
   border: 2px solid gold;
   padding: 10px 20px;
@@ -99,7 +138,8 @@ nav.navbar h1,
 
 /* 🔥 General Link Styles */
 a {
-  color: gold;
+  font-family: 'lotr', 'MedievalSharp', cursive;
+  color: gold; 
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease-in-out;
@@ -111,32 +151,20 @@ a:hover {
 }
 
 /* 🔥 Titles */
-h1 {
+h1 { /* This specific h1 rule will override the general h1 if it's more specific or comes later */
+  font-family: 'lotr', 'MedievalSharp', serif; 
   font-size: 3rem;
   text-shadow: 0 0 15px gold, 0 0 30px #8b8000;
   color: gold;
 }
 
+/* p already covered by the general rule, but this specific one will apply if needed */
 p {
+  font-family: 'lotr', 'MedievalSharp', cursive;
   font-size: 1.2rem;
   max-width: 800px;
   margin: 0 auto 20px;
   color: #ddd;
-}
-
-/* 🔥 Layout */
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  text-align: center;
-  font-family: 'MedievalSharp', cursive;
-  background: url('/Images/background.gif') no-repeat center center fixed;
-  background-size: cover;
-  color: #f5e8c7; /* Golden Grace text */
-  padding: 50px;
 }
 
 main, .container {
@@ -145,6 +173,7 @@ main, .container {
 
 /* 🔥 Footer */
 footer {
+  font-family: 'lotr', 'MedievalSharp', sans-serif;
   width: 100%;
   text-align: center;
   padding: 15px 0;
@@ -173,7 +202,8 @@ footer {
 
 /*
 .breadcrumb a {
-    color: #ffd700; /* your glow base color 
+    font-family: 'lotr', 'MedievalSharp', cursive;
+    color: #ffd700; 
     text-decoration: none;
     font-weight: bold;
     position: relative;
@@ -182,12 +212,15 @@ footer {
 
 .breadcrumb a:hover,
 .breadcrumb a:focus {
-    color: #fff8b0; /* lighter on hover *
+    color: #fff8b0; 
     text-shadow: 0 0 8px #ffd700, 0 0 12px #ffd700;
 }
 */
 
+/* This 'a' rule might be redundant if the one above is identical and applies globally.
+   Ensure consistency. It already has the font. */
 a {
+    font-family: 'lotr', 'MedievalSharp', cursive;
     color: #ffd700; /* Golden base color */
     text-decoration: none;
     font-weight: bold;
@@ -205,6 +238,7 @@ a:focus {
 
 
 .badge-stock {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     background-color: rgba(255, 215, 0, 0.15); /* soft gold background */
     color: #ffd700;
     border: 1px solid #ffd700;
@@ -216,6 +250,7 @@ a:focus {
 }
 
 .badge-out {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     background-color: rgba(255, 77, 77, 0.15); /* dark red */
     color: #ff4d4d;
     border: 1px solid #ff4d4d;
@@ -226,56 +261,66 @@ a:focus {
     text-shadow: 0 0 4px rgba(255, 77, 77, 0.5);
 }
 
-
+/* Duplicated badge styles - font is applied in the first set. */
     .badge-stock {
+        /* font-family already set above */
         background-color: rgba(255, 215, 0, 0.15);
         color: #ffd700;
         border: 1px solid #ffd700;
         border-radius: 0.5rem;
-        padding: 0.35rem 0.75rem;
+        padding: 0.35rem 0.75rem; /* slightly different padding from above, consolidate if possible */
         font-weight: 600;
         box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
         text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
     }
 
     .badge-out {
+        /* font-family already set above */
         background-color: rgba(255, 77, 77, 0.1);
         color: #ff4d4d;
         border: 1px solid #ff4d4d;
         border-radius: 0.5rem;
-        padding: 0.35rem 0.75rem;
+        padding: 0.35rem 0.75rem; /* slightly different padding from above, consolidate if possible */
         font-weight: 600;
         box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
         text-shadow: 0 0 4px rgba(255, 77, 77, 0.4);
     }
 
-
-
  /* ============================
 🌟 WIZARD DROPDOWN MENU STYLES
 =============================== */
-/* ============================
-🌟 WIZARD DROPDOWN MENU STYLES
-=============================== */
-
 #dropdownNavbar {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 215, 0, 0.3);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     border-radius: 1rem;
     color: white;
-    width: 11rem; /* Tailwind w-44 */
-    font-weight: normal;
+    width: 11rem; 
+    font-weight: normal; 
     z-index: 10;
     position: absolute;
     overflow: hidden;
     padding: 0.5rem 0;
-    text-align: center; /* ⬅️ Now text is center-aligned */
+    text-align: center;
+}
+
+.glassy-panel {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+    color: white;
+    transition: box-shadow 0.3s ease;
+    font-family: 'lotr', 'MedievalSharp', cursive;
 }
 
 /* 🎉 User Greeting */
 #dropdownNavbar .user-header {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     padding: 1rem;
     border-bottom: 1px solid rgba(255, 215, 0, 0.2);
     font-size: 0.9rem;
@@ -283,10 +328,11 @@ a:focus {
     background: rgba(255, 255, 255, 0.05);
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    text-align: center; /* Keep the greeting centered */
+    text-align: center;
 }
 
 #dropdownNavbar .user-header .email {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     font-size: 0.75rem;
     color: #ccc;
     display: block;
@@ -295,8 +341,9 @@ a:focus {
 
 /* 📋 Menu List */
 #dropdownNavbar ul {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     padding: 0.5rem 0;
-    font-size: 0.875rem;
+    font-size: 0.875rem; 
     list-style: none;
     margin: 0;
 }
@@ -304,6 +351,7 @@ a:focus {
 /* ✨ Menu Items (links & buttons) */
 #dropdownNavbar a,
 #dropdownNavbar button {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     display: block;
     width: 100%;
     text-align: left;
@@ -316,8 +364,7 @@ a:focus {
     transition: all 0.2s ease;
     text-decoration: none;
     text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
-    text-align: center; /* ⬅️ Now text is Center-aligned */
-
+    text-align: center;
 }
 
 /* ✨ On hover */
@@ -354,9 +401,6 @@ a:focus {
     animation: fadeInDropdown 0.3s ease-out;
 }
 
-
-
-
 /* 🎥 Fancy Gandalf Frame */
 .gandalf-frame {
     border: 6px double #ffd700;
@@ -370,15 +414,14 @@ a:focus {
     position: relative;
 }
 
-/* Optional glow when hovered or shown */
 .gandalf-frame:hover {
     box-shadow:
         0 0 30px rgba(255, 215, 0, 0.5),
         inset 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-
 .wrong-login-msg {
+    font-family: 'lotr', 'MedievalSharp', sans-serif;
     font-size: 4rem;
     color: #e54922;
     text-shadow: 0 0 6px rgba(255, 60, 0, 0.5);
@@ -393,4 +436,27 @@ a:focus {
     to {
         opacity: 1;
     }
+}
+
+.page-lock-overlay {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  pointer-events: all;
+}
+
+.perma-card {
+  font-family: 'lotr', 'MedievalSharp', cursive;
+  background: rgba(0, 0, 0, 0.75);
+  border: 3px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.4);
+  color: white;
+  pointer-events: all;
+}
+
+.header-flush-top {
+  margin-top: -5px;
+}
+
+.nav-flush-top {
+  margin-top: -5px;
 }

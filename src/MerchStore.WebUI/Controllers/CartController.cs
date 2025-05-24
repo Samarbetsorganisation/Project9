@@ -15,8 +15,10 @@ namespace MerchStore.Controllers
             {
                 Items = new List<CartItemViewModel>
                 {
-                    new() { ProductName="🧁 Cupcake", UnitPrice=2.50m, Quantity=3 },
-                    new() { ProductName="🍞 Bread Loaf", UnitPrice=1.20m, Quantity=2 },
+                    new() { ProductName="Premium Subscription", UnitPrice=500.0m, Quantity=3 },
+                    new() { ProductName="Administration fee", UnitPrice=1000.0m, Quantity=1 },
+                    new() {ProductName="Tip", UnitPrice=120.0m, Quantity=1},
+                    new() {ProductName="Tipping fee", UnitPrice=20.0m, Quantity=1}
                 }
             };
             vm.TotalPrice = vm.Items.Sum(i => i.Subtotal);

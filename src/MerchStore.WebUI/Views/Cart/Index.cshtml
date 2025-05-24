@@ -61,15 +61,36 @@
 </style>
 
 <div class="max-w-4xl mx-auto p-6 cart-container">
+
+  @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Cart")
+{
+  <div class="page-lock-overlay fixed inset-0 z-50 flex items-center justify-center">
+    <div class="perma-card px-6 py-6 rounded-2xl shadow-2xl text-center max-w-2xl w-full">
+      <h2 class="text-yellow-300 text-3xl font-bold mb-4">Mordor lock engaged!</h2>
+      <p class="text-yellow-100">
+        <img src="~/Images/uruk.png" 
+     alt="Gandalf the Grey" 
+     class="rounded-circle"
+     style="width: 150px; height: 150px; object-fit: cover; display: block; margin-left: auto; margin-right: auto; margin-bottom: 5px;" />
+
+        This cart is protected by ancient spells. No actions may be taken while the relic seal is active.<br /><br />
+        Please subscribe to our cart subscription or await the rising of the next moon. <br /><br />
+        <a asp-controller="Catalog" asp-action="Index" class="continue-btn">← Continue Shopping</a>
+<a asp-controller="Checkout" asp-action="Index" class="checkout-btn">Subscription →</a>
+      </p>
+    </div>
+  </div>
+}
+
   <h1 class="text-3xl font-bold mb-6 text-yellow-300">Your Shopping Cart 🛒</h1>
 
   <table class="w-full table-auto mb-8 rounded-lg overflow-hidden">
     <thead>
       <tr>
         <th class="p-3 text-left">Product</th>
-        <th class="p-3 text-center">Unit (€)</th>
+        <th class="p-3 text-center">Unit (Kr)</th>
         <th class="p-3 text-center">Qty</th>
-        <th class="p-3 text-right">Subtotal (€)</th>
+        <th class="p-3 text-right">Subtotal</th>
       </tr>
     </thead>
     <tbody>
@@ -79,7 +100,7 @@
           <td class="p-3">@item.ProductName</td>
           <td class="p-3 text-center">@item.UnitPrice.ToString("0.00")</td>
           <td class="p-3 text-center">@item.Quantity</td>
-          <td class="p-3 text-right">@item.Subtotal.ToString("0.00")</td>
+          <td class="p-3 text-right">kr@(item.Subtotal.ToString("0.00"))</td>
         </tr>
       }
     </tbody>
@@ -87,7 +108,7 @@
 
   <div class="flex justify-end items-center space-x-6">
     <span class="text-xl font-semibold text-white">Total:</span>
-    <span class="text-2xl font-bold total-price">€@Model.TotalPrice.ToString("0.00")</span>
+    <span class="text-2xl font-bold total-price">kr@(Model.TotalPrice.ToString("0.00"))</span>
   </div>
 
   <div class="mt-8 flex justify-end space-x-4">

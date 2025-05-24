@@ -52,59 +52,59 @@
 </style>
 
 <div class="max-w-6xl mx-auto p-6 grid grid-cols-3 gap-8 checkout-container">
-  <!-- 🧾 Form -->
+  <!--  Form -->
   <div class="col-span-2">
-    <h1 class="text-3xl font-bold mb-6 text-yellow-300">Checkout 💳</h1>
+    <h1 class="text-3xl font-bold mb-6 text-yellow-300">Checkout </h1>
 
-    <form asp-action="Index" method="post" class="space-y-6">
-      <!-- 📦 Shipping -->
+    <form asp-action="Thanks" method="post" class="space-y-6">
+      <!--  Shipping -->
       <fieldset class="border border-yellow-200 p-4 rounded">
         <legend class="font-semibold">Shipping & Billing</legend>
         <div class="grid grid-cols-2 gap-4 mt-4">
-          <input asp-for="FullName" placeholder="Full Name" class="checkout-input p-2 rounded w-full" />
-          <input asp-for="Email" type="email" placeholder="Email" class="checkout-input p-2 rounded w-full" />
-          <input asp-for="AddressLine1" placeholder="Address Line 1" class="checkout-input p-2 rounded w-full" />
+          <input asp-for="FullName" placeholder="Full Name" class="checkout-input p-2 rounded w-full" required />
+          <input asp-for="Email" type="email" placeholder="Email" class="checkout-input p-2 rounded w-full" required />
+          <input asp-for="AddressLine1" placeholder="Address Line 1" class="checkout-input p-2 rounded w-full" required />
           <input asp-for="AddressLine2" placeholder="Address Line 2" class="checkout-input p-2 rounded w-full" />
-          <input asp-for="City" placeholder="City" class="checkout-input p-2 rounded w-full" />
-          <input asp-for="PostalCode" placeholder="Postal Code" class="checkout-input p-2 rounded w-full" />
-          <input asp-for="Country" placeholder="Country" class="checkout-input p-2 rounded w-full" />
+          <input asp-for="City" placeholder="City" class="checkout-input p-2 rounded w-full" required />
+          <input asp-for="PostalCode" placeholder="Postal Code" class="checkout-input p-2 rounded w-full" required />
+          <input asp-for="Country" placeholder="Country" class="checkout-input p-2 rounded w-full" required />
         </div>
       </fieldset>
 
-      <!-- 💳 Payment -->
+      <!--  Payment -->
       <fieldset class="border border-yellow-200 p-4 rounded">
         <legend class="font-semibold">Payment Info</legend>
         <div class="mt-4 grid grid-cols-2 gap-4">
-          <input asp-for="CardNumber" placeholder="Card Number" class="checkout-input p-2 rounded w-full" />
+          <input asp-for="CardNumber" placeholder="Card Number" class="checkout-input p-2 rounded w-full" required />
           <div class="flex space-x-2">
-            <input asp-for="ExpiryMonth" placeholder="MM" class="checkout-input p-2 rounded w-1/2" />
-            <input asp-for="ExpiryYear" placeholder="YY" class="checkout-input p-2 rounded w-1/2" />
+            <input asp-for="ExpiryMonth" placeholder="MM" class="checkout-input p-2 rounded w-1/2" required />
+            <input asp-for="ExpiryYear" placeholder="YY" class="checkout-input p-2 rounded w-1/2" required />
           </div>
-          <input asp-for="CVV" placeholder="CVV" class="checkout-input p-2 rounded w-full" />
+          <input asp-for="CVV" placeholder="CVV" class="checkout-input p-2 rounded w-full" required />
         </div>
       </fieldset>
 
-      <button type="submit" class="w-full py-3 checkout-button rounded">
-        Place Order 🚀
-      </button>
+      <a asp-controller="Checkout" asp-action="Thanks" class="w-full py-3 checkout-button rounded inline-block text-center">
+      Place Order
+      </a>
     </form>
   </div>
 
   <!-- 🛒 Order Summary -->
   <aside class="col-span-1 order-summary p-4 rounded">
-    <h2 class="text-xl font-semibold mb-4 text-yellow-300">Your Order 🛍️</h2>
+    <h2 class="text-xl font-semibold mb-4 text-yellow-300">Your Order </h2>
     <ul class="space-y-2">
       @foreach (var item in Model.Items)
       {
         <li class="flex justify-between">
           <span>@item.ProductName x @item.Quantity</span>
-          <span>€@item.Subtotal.ToString("0.00")</span>
+          <span>kr@(item.Subtotal.ToString("0.00"))</span>
         </li>
       }
     </ul>
     <div class="border-t border-yellow-200 mt-4 pt-4 flex justify-between font-bold text-yellow-300">
       <span>Total:</span>
-      <span>€@Model.TotalPrice.ToString("0.00")</span>
+      <span>kr@(Model.TotalPrice.ToString("0.00"))</span>
     </div>
   </aside>
 </div>

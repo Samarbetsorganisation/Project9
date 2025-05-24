@@ -100,6 +100,12 @@
         /* The image itself will define the height up to max-height, 
            so the container just needs to stick. */
     }
+
+    .btn-success {
+    background-color: #00ff4c !important; /* Gold */
+    border-color: #ffffff !important;     /* Slightly darker gold border */
+    color: rgb(0, 0, 0) !important;              /* Text color for contrast */
+}
 </style>
 
 <nav aria-label="breadcrumb" class="mt-3">
@@ -147,6 +153,32 @@
                     <h5 class="text-yellow-100">Description</h5>
                     <p class="lead text-white/80">@Model.Description</p>
                 </div>
+
+                    <div class="mt-3">
+                        <button id="addToCartButton" class="btn btn-outline-secondary w-100" onclick="handleAddToCart()">
+                            <i class="bi bi-cart"></i> Add to Cart
+                        </button>
+                    </div>
+
+                    <script>
+                        function handleAddToCart() {
+                            const button = document.getElementById('addToCartButton');
+                            const originalText = button.innerHTML;
+                            const originalClasses = button.className;
+
+                            // Change the text, style, and disable the button
+                            button.innerHTML = '<i class="bi bi-check-circle"></i> Product added to cart';
+                            button.className = 'btn btn-success w-100';
+                            button.disabled = true;
+
+                            // Revert after 2 seconds
+                            setTimeout(() => {
+                                button.innerHTML = originalText;
+                                button.className = originalClasses;
+                                button.disabled = false;
+                            }, 2000);
+                        }
+                    </script>
             </div>
 
             <div class="reviews-section mt-auto">

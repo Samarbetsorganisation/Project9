@@ -24,5 +24,12 @@ namespace MerchStore.Controllers
 
             return View(vm);
         }
+
+        [HttpGet]
+        public IActionResult Thanks()
+        {
+            var vm = new ThanksViewModel();
+            return View(vm);
+        }
     }
 }
