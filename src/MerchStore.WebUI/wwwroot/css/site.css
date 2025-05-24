@@ -184,6 +184,11 @@ footer {
   position: relative;
 }
 
+.copyright-symbol {
+  font-family: 'Times New Roman', sans-serif !important;
+  font-size: 1.2em;
+}
+
 /* 🔥 Fade-in Animation */
 @keyframes fadeIn {
   from {
