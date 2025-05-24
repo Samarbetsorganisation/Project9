@@ -7,12 +7,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <style>
+    /* ... (other styles like .glassy-panel, .breadcrumb, .reviews-section, etc. remain the same) ... */
     .product-detail-image {
-        max-height: 500px;
-        object-fit: cover;
-        width: 100%;
-        border-radius: 1rem;
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+        width: 100%; /* Make the image element take the full width of its container */
+        max-height: 5000px; /* Constrain the maximum height */
+        object-fit: cover; /* Scale the image to maintain its aspect ratio while filling the element’s entire content box. The image will be clipped to fit. */
+        
+        display: block; /* Removes any extra space below the image if it were inline */
+        
+        border-radius: 1rem; /* Your desired rounded corners */
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.3); /* Your existing shadow */
     }
 
     .glassy-panel {
@@ -53,6 +57,49 @@
         font-weight: bold;
         padding: 0.75rem 1.25rem;
     }
+
+    .reviews-section {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .review-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .review-item h6 {
+        color: #fde047; 
+    }
+    
+    .review-item .rating-stars .bi-star-fill {
+        color: #ffd700; 
+    }
+    .review-item .rating-stars .bi-star {
+        color: #ccc; 
+    }
+
+    .review-stats {
+        margin-bottom: 1rem;
+    }
+    .review-stats .stat-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #fde047;
+    }
+
+    .sticky-image-container {
+        position: -webkit-sticky; 
+        position: sticky;
+        top: 20px; 
+        /* The image itself will define the height up to max-height, 
+           so the container just needs to stick. */
+    }
 </style>
 
 <nav aria-label="breadcrumb" class="mt-3">
@@ -65,33 +112,36 @@
 
 <div class="row mt-5 g-4">
     <div class="col-md-6">
-        @if (Model.HasImage)
-        {
-            <img src="@Model.ImageUrl" class="img-fluid product-detail-image" alt="@Model.Name">
-        }
-        else
-        {
-            <div class="bg-gray-800 text-center p-5 rounded-3xl shadow text-white glassy-panel">
-                <h3 class="text-yellow-200">No image available</h3>
-            </div>
-        }
+        <div class="sticky-image-container">
+            @if (Model.HasImage)
+            {
+                <!-- The .img-fluid class is still good for baseline responsive behavior from Bootstrap -->
+                <img src="@Model.ImageUrl" class="img-fluid product-detail-image" alt="@Model.Name">
+            }
+            else
+            {
+                <!-- The placeholder should also adhere to the .product-detail-image styles -->
+                <div class="bg-gray-800 text-center p-5 shadow text-white glassy-panel product-detail-image d-flex align-items-center justify-content-center"> 
+                    <h3 class="text-yellow-200">No image available</h3>
+                </div>
+            }
+        </div>
     </div>
 
     <div class="col-md-6">
-        <div class="glassy-panel h-100 d-flex flex-column justify-content-between">
+        <div class="glassy-panel h-100 d-flex flex-column">
             <div>
                 <h1 class="text-yellow-300 mb-3">@Model.Name</h1>
                 <h4 class="text-yellow-200 mb-4">@Model.FormattedPrice</h4>
 
-              @if (Model.InStock)
-{
-    <span class="badge-stock me-2">In Stock</span>
-}
-else
-{
-    <span class="badge-out me-2">Out of Stock</span>
-}
-
+                @if (Model.InStock)
+                {
+                    <span class="badge bg-success me-2">In Stock</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger me-2">Out of Stock</span>
+                }
 
                 <div class="mt-4">
                     <h5 class="text-yellow-100">Description</h5>
@@ -99,6 +149,66 @@ else
                 </div>
             </div>
 
+            <div class="reviews-section mt-auto">
+                <h4 class="text-yellow-100 mb-3">Customer Reviews</h4>
+
+                @if (!string.IsNullOrEmpty(Model.ReviewStatusMessage))
+                {
+                    <div class="alert alert-info" role="alert">
+                        @Model.ReviewStatusMessage
+                    </div>
+                }
+                else if (Model.Reviews != null && Model.Reviews.Any())
+                {
+                    <div class="review-stats mb-3">
+                        @if (Model.AverageRating.HasValue)
+                        {
+                            <span class="me-3">
+                                Average Rating: <span class="stat-value">@Model.AverageRating.Value.ToString("0.0") / 5</span>
+                                <span class="rating-stars ms-1">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <i class="bi @(i <= Math.Round(Model.AverageRating.Value) ? "bi-star-fill" : "bi-star")"></i>
+                                    }
+                                </span>
+                            </span>
+                        }
+                        @if (Model.TotalReviews.HasValue)
+                        {
+                            <span class="me-3">Total Reviews: <span class="stat-value">@Model.TotalReviews.Value</span></span>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.LastReviewDate))
+                        {
+                            <span>Last Review: <span class="stat-value">@Model.LastReviewDate</span></span>
+                        }
+                    </div>
+
+                    foreach (var review in Model.Reviews)
+                    {
+                        <div class="review-item">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0">@review.Name</h6>
+                                <small class="text-white/70">@review.Date</small>
+                            </div>
+                            <div class="rating-stars mb-2">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="bi @(i <= review.Rating ? "bi-star-fill" : "bi-star")"></i>
+                                }
+                                <span class="ms-2">(@review.Rating / 5)</span>
+                            </div>
+                            <p class="text-white/90 mb-0">@review.Text</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-info" role="alert">
+                         No reviews available for this product at the moment.
+                    </div>
+                }
+            </div>
+            
             <div class="mt-4 text-end">
                 <a asp-action="Index" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Back to Products
